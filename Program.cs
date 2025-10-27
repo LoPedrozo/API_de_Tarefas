@@ -1,6 +1,13 @@
+using TAREFASAPI.Routes;
+
 var builder = WebApplication.CreateBuilder(args);
 var app = builder.Build();
 
-app.MapGet("/", () => "Hello World!");
+app.MapGet("/", () => Results.Ok("Bem-vindo à API de Tarefas!"));
+
+ROTA_GET.Map(app);
+ROTA_POST.Map(app);
+ROTA_DELETE.Map(app);
 
 app.Run();
+

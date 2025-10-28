@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "x22mIWHvH3LNaKIMiV+TxCSD5M5b8YNjZRiDYUSLG52kAuo2QflC2OyQMQRc8AMV9M/ZR76nMyJaNQ1bF38hvg==",
+  "dgSpecHash": "93eJeA2KVl178Pce479CSGgzMEIxR0oeYOoHDr+yb4XHL2mUhkYf1Jtt/9p9Ajvioxmy0S39r76I1kHD2OWN9g==",
   "success": true,
-  "projectFilePath": "/Users/pedrozo/TAREFASAPI/TAREFASAPI.csproj",
+  "projectFilePath": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

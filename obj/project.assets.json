@@ -8,19 +8,19 @@
     "net7.0": []
   },
   "packageFolders": {
-    "C:\\Users\\Aslem\\.nuget\\packages\\": {}
+    "C:\\Users\\acair\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
+      "projectUniqueName": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\TAREFASAPI.csproj",
       "projectName": "TAREFASAPI",
-      "projectPath": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
-      "packagesPath": "C:\\Users\\Aslem\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\obj\\",
+      "projectPath": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\TAREFASAPI.csproj",
+      "packagesPath": "C:\\Users\\acair\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Aslem\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\acair\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj": {}
+    "c:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj": {
+    "c:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
+        "projectUniqueName": "c:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
         "projectName": "TAREFASAPI",
-        "projectPath": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
+        "projectPath": "c:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
         "packagesPath": "C:\\Users\\Aslem\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\obj\\",
+        "outputPath": "c:\\Users\\Aslem\\OneDrive\\Documents\\GitHub\\API_de_Tarefas\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Aslem\\AppData\\Roaming\\NuGet\\NuGet.Config"

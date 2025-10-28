@@ -1,0 +1,25 @@
+# Build results
+/bin/
+/obj/
+
+# User-specific files
+*.user
+*.userosscache
+*.sln.docstates
+
+# IDE folders
+.vs/
+.vscode/
+
+# Logs and caches
+*.log
+*.cache
+
+# NuGet
+*.nupkg
+*.snupkg
+/packages/
+
+# OS-generated files
+.DS_Store
+Thumbs.db

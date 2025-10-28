@@ -8,8 +8,8 @@ namespace TAREFASAPI.Routes
         {
             List<Tarefa> tarefas = new List<Tarefa>
             {
-                new Tarefa { Id = 1, Titulo = "Estudar C#", Concluida = false },
-                new Tarefa { Id = 2, Titulo = "Fazer café", Concluida = true }
+                new Tarefa { Id = 1, Titulo = "Estudar C#", Status = "Não concluída" },
+                new Tarefa { Id = 2, Titulo = "Fazer café", Status = "Concluída" }
             };
 
             app.MapDelete("/api/tarefas/{id}", (int id) =>

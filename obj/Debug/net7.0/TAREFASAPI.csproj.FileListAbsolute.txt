@@ -48,3 +48,28 @@ c:\Users\Aslem\OneDrive\Documents\GitHub\API_de_Tarefas\obj\Debug\net7.0\refint\
 c:\Users\Aslem\OneDrive\Documents\GitHub\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.pdb
 c:\Users\Aslem\OneDrive\Documents\GitHub\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.genruntimeconfig.cache
 c:\Users\Aslem\OneDrive\Documents\GitHub\API_de_Tarefas\obj\Debug\net7.0\ref\TAREFASAPI.dll
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\appsettings.Development.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\appsettings.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\TAREFASAPI.exe
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\TAREFASAPI.deps.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\TAREFASAPI.runtimeconfig.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\TAREFASAPI.dll
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\bin\Debug\net7.0\TAREFASAPI.pdb
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.AssemblyInfoInputs.cache
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.AssemblyInfo.cs
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.csproj.CoreCompileInputs.cache
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.MvcApplicationPartsAssemblyInfo.cache
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets\msbuild.TAREFASAPI.Microsoft.AspNetCore.StaticWebAssets.props
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets\msbuild.build.TAREFASAPI.props
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets\msbuild.buildMultiTargeting.TAREFASAPI.props
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets\msbuild.buildTransitive.TAREFASAPI.props
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets.pack.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets.build.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\staticwebassets.development.json
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\scopedcss\bundle\TAREFASAPI.styles.css
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.dll
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\refint\TAREFASAPI.dll
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.pdb
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\TAREFASAPI.genruntimeconfig.cache
+C:\Users\acair\OneDrive\Área de Trabalho\Projeto web\API_de_Tarefas\obj\Debug\net7.0\ref\TAREFASAPI.dll

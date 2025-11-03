@@ -73,3 +73,10 @@ C:/Users/acair/OneDrive/Área de Trabalho/Projeto web/API_de_Tarefas/obj/Debug/n
 C:/Users/acair/OneDrive/Área de Trabalho/Projeto web/API_de_Tarefas/obj/Debug/net7.0/TAREFASAPI.pdb
 C:/Users/acair/OneDrive/Área de Trabalho/Projeto web/API_de_Tarefas/obj/Debug/net7.0/TAREFASAPI.genruntimeconfig.cache
 C:/Users/acair/OneDrive/Área de Trabalho/Projeto web/API_de_Tarefas/obj/Debug/net7.0/ref/TAREFASAPI.dll
+/Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/Microsoft.OpenApi.dll
+/Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/Swashbuckle.AspNetCore.Swagger.dll
+/Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerGen.dll
+/Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/Swashbuckle.AspNetCore.SwaggerUI.dll
+/Users/pedrozo/TAREFASAPI/obj/Debug/net7.0/TAREFASAPI.csproj.AssemblyReference.cache
+/Users/pedrozo/TAREFASAPI/obj/Debug/net7.0/TAREFASAPI.MvcApplicationPartsAssemblyInfo.cs
+/Users/pedrozo/TAREFASAPI/obj/Debug/net7.0/TAREFASAPI.csproj.CopyComplete

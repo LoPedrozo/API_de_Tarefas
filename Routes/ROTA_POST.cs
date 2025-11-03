@@ -4,13 +4,12 @@ namespace TAREFASAPI.Routes
 {
     public static class ROTA_POST
     {
-        public static void Map(WebApplication app)
+        public static void Map(WebApplication app, List<Tarefa> tarefas)
         {
-            List<Tarefa> tarefas = new List<Tarefa>(); // Simples lista local
-
             app.MapPost("/api/tarefas", (Tarefa novaTarefa) =>
             {
-                novaTarefa.Id = tarefas.Count + 1;
+                var novoId = tarefas.Any() ? tarefas.Max(t => t.Id) + 1 : 1;
+                novaTarefa.Id = novoId;
                 tarefas.Add(novaTarefa);
                 return Results.Created($"/api/tarefas/{novaTarefa.Id}", novaTarefa);
             });

@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "x22mIWHvH3LNaKIMiV+TxCSD5M5b8YNjZRiDYUSLG52kAuo2QflC2OyQMQRc8AMV9M/ZR76nMyJaNQ1bF38hvg==",
+  "dgSpecHash": "aBRugDrv+UUIbCIKeG3kn/5V3WAravMQExifu5go6Bfa2nUQ97RMfZJiMggrQJgcIiBxgOxJ2h+UJ3CaF1QIuA==",
   "success": true,
   "projectFilePath": "/Users/pedrozo/TAREFASAPI/TAREFASAPI.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "/Users/pedrozo/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/pedrozo/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/pedrozo/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/pedrozo/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/pedrozo/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/pedrozo/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
   "logs": []
 }

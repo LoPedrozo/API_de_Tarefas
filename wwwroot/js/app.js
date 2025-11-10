@@ -1,10 +1,63 @@
-import {
-  LABELS,
-  getLabelOptions,
-  getLabelDefinition,
-  getDefaultLabelId,
-  normalizeLabel
-} from './labelsConfig.js';
+const LABEL_DEFINITIONS = {
+  verde: {
+    id: 'verde',
+    name: 'Verde',
+    category: 'Vendas',
+    color: 'Verde',
+    aliases: ['verde', 'vendas', 'tag1']
+  },
+  amarelo: {
+    id: 'amarelo',
+    name: 'Amarelo',
+    category: 'Marketing',
+    color: 'Amarelo',
+    aliases: ['amarelo', 'marketing', 'tag2']
+  },
+  cinza: {
+    id: 'cinza',
+    name: 'Cinza',
+    category: 'Operações',
+    color: 'Cinza',
+    aliases: ['cinza', 'operacoes', 'operações', 'tag3']
+  }
+};
+
+const LABEL_DISPLAY_ORDER = ['verde', 'amarelo', 'cinza'];
+
+const LABEL_ALIAS_LOOKUP = LABEL_DISPLAY_ORDER.reduce((acc, id) => {
+  const def = LABEL_DEFINITIONS[id];
+  if (!def) return acc;
+  def.aliases?.forEach(alias => {
+    acc[normalizeAlias(alias)] = id;
+  });
+  acc[normalizeAlias(id)] = id;
+  return acc;
+}, {});
+
+function normalizeAlias(value) {
+  return value
+    .toString()
+    .normalize('NFD')
+    .replace(/[^a-z0-9]/gi, '')
+    .toLowerCase();
+}
+
+function normalizeLabel(label) {
+  if (!label) return null;
+  const sanitized = normalizeAlias(label.trim());
+  return LABEL_ALIAS_LOOKUP[sanitized] ?? null;
+}
+
+function getLabelDefinition(id) {
+  return id ? LABEL_DEFINITIONS[id] ?? null : null;
+}
+
+function getLabelOptions() {
+  return LABEL_DISPLAY_ORDER
+    .map(id => LABEL_DEFINITIONS[id])
+    .filter(Boolean);
+}
+
 
 const API_URL = typeof window !== 'undefined'
   ? `${window.location.origin}/api/tarefas`
@@ -33,13 +86,10 @@ const PRIORITY_LABEL = {
 const COLOR_CLASS_MAP = {
   'Verde': 'verde',
   'Amarelo': 'amarelo',
-  'Cinza': 'cinza',
-  'Azul': 'azul',
-  'Roxo': 'roxo',
-  'Magenta': 'magenta'
+  'Cinza': 'cinza'
 };
 
-const DEFAULT_LABEL_ID = getDefaultLabelId();
+const DEFAULT_LABEL_ID = LABEL_DISPLAY_ORDER[0];
 
 const filterState = {
   searchTerm: '',
@@ -119,7 +169,10 @@ function bindEvents() {
   });
 
   elements.labelFilter.addEventListener('change', event => {
-    filterState.labelId = event.target.value;
+    const selected = event.target.value;
+    const isValid = Boolean(getLabelDefinition(selected));
+    filterState.labelId = isValid ? selected : '';
+    event.target.value = filterState.labelId;
     renderColumns();
   });
 
@@ -191,36 +244,40 @@ function renderLabelSelectOptions(selectEl, { includeEmpty, emptyLabel = '' }) {
   });
 
   if (!includeEmpty) {
-    selectEl.value = currentValue || DEFAULT_LABEL_ID;
-  } else if (currentValue) {
+    const validValue = getLabelDefinition(currentValue) ? currentValue : DEFAULT_LABEL_ID;
+    selectEl.value = validValue;
+  } else if (currentValue && getLabelDefinition(currentValue)) {
     selectEl.value = currentValue;
+  } else {
+    selectEl.value = '';
   }
 }
 
 function getCanonicalTaskLabelId(rawTags) {
-  if (!Array.isArray(rawTags)) return DEFAULT_LABEL_ID;
+  if (!Array.isArray(rawTags)) return null;
   for (const raw of rawTags) {
     const normalized = normalizeLabel(raw);
     if (normalized) {
       return normalized;
     }
   }
-  return DEFAULT_LABEL_ID;
+  return null;
 }
 
-export function mapApiTaskToUi(dto) {
+function mapApiTaskToUi(dto) {
   const labelId = getCanonicalTaskLabelId(dto.tags);
-  const label = getLabelDefinition(labelId) ?? getLabelDefinition(DEFAULT_LABEL_ID);
+  const label = getLabelDefinition(labelId);
+  const priority = normalizePriority(dto.prioridade);
 
   return {
     id: dto.id,
     title: dto.titulo ?? 'Sem título',
     description: dto.descricao ?? '',
     status: normalizeStatus(dto.status),
-    priority: normalizePriority(dto.prioridade),
-    labelId: label.id,
-    label,
-    priorityLabel: PRIORITY_LABEL[normalizePriority(dto.prioridade)]
+    priority,
+    labelId: label?.id ?? null,
+    label: label ?? null,
+    priorityLabel: PRIORITY_LABEL[priority]
   };
 }
 
@@ -251,7 +308,7 @@ function normalizePriority(value) {
   return 'medio';
 }
 
-export function shouldIncludeTask(task, filters) {
+function shouldIncludeTask(task, filters) {
   const search = filters.searchTerm?.toLowerCase() ?? '';
   const matchesSearch = !search
     || task.title.toLowerCase().includes(search)
@@ -304,22 +361,18 @@ function createCard(task) {
     card.appendChild(description);
   }
 
-  const tagsContainer = document.createElement('div');
-  tagsContainer.className = 'card-tags';
-  const label = task.label ?? getLabelDefinition(DEFAULT_LABEL_ID);
+  if (task.label) {
+    const tagsContainer = document.createElement('div');
+    tagsContainer.className = 'card-tags';
 
-  const categoryChip = document.createElement('span');
-  categoryChip.className = 'chip chip-category';
-  categoryChip.textContent = label.category;
-  tagsContainer.appendChild(categoryChip);
+    const categoryChip = document.createElement('span');
+    const colorClass = COLOR_CLASS_MAP[task.label.color] ?? 'cinza';
+    categoryChip.className = `chip chip-category chip-color-${colorClass}`;
+    categoryChip.textContent = task.label.category;
+    tagsContainer.appendChild(categoryChip);
 
-  const colorChip = document.createElement('span');
-  const colorClass = COLOR_CLASS_MAP[label.color] ?? 'cinza';
-  colorChip.className = `chip chip-color chip-color-${colorClass}`;
-  colorChip.textContent = label.color;
-  tagsContainer.appendChild(colorChip);
-
-  card.appendChild(tagsContainer);
+    card.appendChild(tagsContainer);
+  }
 
   const priority = document.createElement('span');
   priority.className = `card-priority priority-${task.priority}`;
@@ -361,7 +414,8 @@ function openModal(task = null, status = 'todo') {
   elements.titleInput.value = task?.title ?? '';
   elements.descriptionInput.value = task?.description ?? '';
   const defaultStatus = task?.status ?? status ?? 'todo';
-  elements.labelSelect.value = task?.labelId ?? DEFAULT_LABEL_ID;
+  const validLabelId = getLabelDefinition(task?.labelId) ? task.labelId : DEFAULT_LABEL_ID;
+  elements.labelSelect.value = validLabelId;
   elements.statusSelect.value = defaultStatus;
   elements.prioritySelect.value = task?.priority ?? 'medio';
   elements.titleError.textContent = '';
@@ -393,7 +447,9 @@ async function handleSubmit(event) {
     title,
     description: elements.descriptionInput.value.trim(),
     status: elements.statusSelect.value,
-    labelId: elements.labelSelect.value || DEFAULT_LABEL_ID,
+    labelId: getLabelDefinition(elements.labelSelect.value)
+      ? elements.labelSelect.value
+      : DEFAULT_LABEL_ID,
     priority: elements.prioritySelect.value
   };
 
@@ -431,7 +487,7 @@ function mapUiTaskToApi(task) {
     descricao: task.description,
     status: STATUS_TO_API[task.status] ?? STATUS_TO_API.todo,
     prioridade: PRIORITY_TO_API[task.priority] ?? PRIORITY_TO_API.medio,
-    tags: [label.name]
+    tags: label ? [label.name] : []
   };
 }
 
@@ -456,5 +512,3 @@ function showToast(message, isError = false) {
   elements.toast.classList.add('show');
   setTimeout(() => elements.toast.classList.remove('show'), 3200);
 }
-
-export { normalizePriority };

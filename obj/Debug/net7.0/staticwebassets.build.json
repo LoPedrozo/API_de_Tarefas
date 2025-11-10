@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "QeZmEo5C1eSFWTUHuuHWdtX/AkiaxdzlQt0wk7sfBP8=",
+  "Hash": "tHsYdS0bIqW+CRR1wSlcOwh6Y53Nhozo2SJsRl1Apeg=",
   "Source": "TAREFASAPI",
   "BasePath": "_content/TAREFASAPI",
   "Mode": "Default",
@@ -49,23 +49,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot/js/app.js"
-    },
-    {
-      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/js/labelsConfig.js",
-      "SourceId": "TAREFASAPI",
-      "SourceType": "Discovered",
-      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
-      "BasePath": "_content/TAREFASAPI",
-      "RelativePath": "js/labelsConfig.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot/js/labelsConfig.js"
     }
   ]
 }

@@ -54,7 +54,7 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/", () => Results.Ok("Bem-vindo à API de Tarefas!"));
+app.MapGet("/", () => Results.Redirect("/swagger", permanent: false));
 
 ROTA_GET.Map(app);
 ROTA_POST.Map(app);

@@ -1,16 +1,16 @@
+using TAREFASAPI.Data;
 using TAREFASAPI.Models;
 
 namespace TAREFASAPI.Routes
 {
     public static class ROTA_POST
     {
-        public static void Map(WebApplication app, List<Tarefa> tarefas)
+        public static void Map(WebApplication app)
         {
-            app.MapPost("/api/tarefas", (Tarefa novaTarefa) =>
+            app.MapPost("/api/tarefas", async (Tarefa novaTarefa, TarefasDbContext db) =>
             {
-                var novoId = tarefas.Any() ? tarefas.Max(t => t.Id) + 1 : 1;
-                novaTarefa.Id = novoId;
-                tarefas.Add(novaTarefa);
+                await db.Tarefas.AddAsync(novaTarefa);
+                await db.SaveChangesAsync();
                 return Results.Created($"/api/tarefas/{novaTarefa.Id}", novaTarefa);
             });
         }

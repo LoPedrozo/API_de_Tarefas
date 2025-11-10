@@ -1,4 +1,6 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Globalization;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 
 namespace TAREFASAPI.Models
@@ -27,6 +29,7 @@ namespace TAREFASAPI.Models
 
 
         /// Data formatada de criação, exibida sem horário.
+        [NotMapped]
         [JsonPropertyName("dataCriacao")]
         public string DataCriacaoFormatada
         {
@@ -45,6 +48,7 @@ namespace TAREFASAPI.Models
 
 
         /// Texto amigável para data de vencimento.
+        [NotMapped]
         [JsonPropertyName("dataVencimento")]
         public string DataVencimentoDescricao
         {
@@ -68,6 +72,7 @@ namespace TAREFASAPI.Models
 
 
         /// Texto amigável para data de conclusão.
+        [NotMapped]
         [JsonPropertyName("dataConclusao")]
         public string DataConclusaoDescricao
         {
@@ -93,8 +98,30 @@ namespace TAREFASAPI.Models
         public string? Responsavel { get; set; }
 
 
-        /// Etiquetas ou tags associadas à tarefa.
-        public List<string>? Tags { get; set; } = new();
+        /// Etiquetas ou tags associadas à tarefa (não mapeadas diretamente no banco).
+        [NotMapped]
+        public List<string> Tags { get; set; } = new();
+
+        /// Representação persistida das tags no banco como JSON.
+        [JsonIgnore]
+        public string TagsPersistidos
+        {
+            get
+            {
+                Tags ??= new List<string>();
+                return JsonSerializer.Serialize(Tags, (JsonSerializerOptions?)null);
+            }
+            set
+            {
+                if (string.IsNullOrWhiteSpace(value))
+                {
+                    Tags = new List<string>();
+                    return;
+                }
+
+                Tags = JsonSerializer.Deserialize<List<string>>(value) ?? new List<string>();
+            }
+        }
 
 
         /// Estimativa de horas para completar a tarefa (opcional).
@@ -103,6 +130,7 @@ namespace TAREFASAPI.Models
 
 
         /// Texto amigável para estimativa de horas.
+        [NotMapped]
         [JsonPropertyName("estimativaHoras")]
         public string EstimativaHorasDescricao
         {
@@ -139,6 +167,7 @@ namespace TAREFASAPI.Models
 
 
         /// Texto amigável para status de arquivamento.
+        [NotMapped]
         [JsonPropertyName("arquivada")]
         public string ArquivadaDescricao
         {

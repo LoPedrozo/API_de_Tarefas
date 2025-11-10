@@ -1,18 +1,20 @@
+using TAREFASAPI.Data;
 using TAREFASAPI.Models;
 
 namespace TAREFASAPI.Routes
 {
     public static class ROTA_DELETE
     {
-        public static void Map(WebApplication app, List<Tarefa> tarefas)
+        public static void Map(WebApplication app)
         {
-            app.MapDelete("/api/tarefas/{id}", (int id) =>
+            app.MapDelete("/api/tarefas/{id}", async (int id, TarefasDbContext db) =>
             {
-                var tarefa = tarefas.FirstOrDefault(t => t.Id == id);
+                var tarefa = await db.Tarefas.FindAsync(id);
                 if (tarefa == null)
                     return Results.NotFound("Tarefa não encontrada!");
 
-                tarefas.Remove(tarefa);
+                db.Tarefas.Remove(tarefa);
+                await db.SaveChangesAsync();
                 return Results.Ok($"Tarefa {id} removida com sucesso!");
             });
         }

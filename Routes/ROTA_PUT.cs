@@ -16,14 +16,9 @@ namespace TAREFASAPI.Routes
                 tarefaExistente.Titulo = tarefaAtualizada.Titulo;
                 tarefaExistente.Descricao = tarefaAtualizada.Descricao;
                 tarefaExistente.Status = tarefaAtualizada.Status;
-                tarefaExistente.DataCriacao = tarefaAtualizada.DataCriacao;
-                tarefaExistente.DataVencimento = tarefaAtualizada.DataVencimento;
-                tarefaExistente.DataConclusao = tarefaAtualizada.DataConclusao;
                 tarefaExistente.Prioridade = tarefaAtualizada.Prioridade;
                 tarefaExistente.Responsavel = tarefaAtualizada.Responsavel;
                 tarefaExistente.Tags = tarefaAtualizada.Tags ?? new List<string>();
-                tarefaExistente.EstimativaHoras = tarefaAtualizada.EstimativaHoras;
-                tarefaExistente.Arquivada = tarefaAtualizada.Arquivada;
 
                 await db.SaveChangesAsync();
                 return Results.Ok(tarefaExistente);

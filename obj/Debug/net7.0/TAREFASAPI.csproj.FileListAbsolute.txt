@@ -125,3 +125,4 @@ C:/Users/acair/OneDrive/Área de Trabalho/Projeto web/API_de_Tarefas/obj/Debug/n
 /Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/runtimes/win-x64/native/e_sqlite3.dll
 /Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/runtimes/win-x86/native/e_sqlite3.dll
 /Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/runtimes/browser/lib/net7.0/System.Text.Encodings.Web.dll
+/Users/pedrozo/TAREFASAPI/bin/Debug/net7.0/TAREFASAPI.staticwebassets.runtime.json

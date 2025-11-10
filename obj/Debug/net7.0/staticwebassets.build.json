@@ -1,11 +1,71 @@
 {
   "Version": 1,
-  "Hash": "lZWSzB5nPHjNeslB27dsEtcFLpu5b1akjOWAmlwQtpM=",
+  "Hash": "QeZmEo5C1eSFWTUHuuHWdtX/AkiaxdzlQt0wk7sfBP8=",
   "Source": "TAREFASAPI",
   "BasePath": "_content/TAREFASAPI",
   "Mode": "Default",
   "ManifestType": "Build",
   "ReferencedProjectsConfiguration": [],
-  "DiscoveryPatterns": [],
-  "Assets": []
+  "DiscoveryPatterns": [
+    {
+      "Name": "TAREFASAPI/wwwroot",
+      "Source": "TAREFASAPI",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
+      "BasePath": "_content/TAREFASAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/index.html",
+      "SourceId": "TAREFASAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
+      "BasePath": "_content/TAREFASAPI",
+      "RelativePath": "index.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/index.html"
+    },
+    {
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/js/app.js",
+      "SourceId": "TAREFASAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
+      "BasePath": "_content/TAREFASAPI",
+      "RelativePath": "js/app.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/app.js"
+    },
+    {
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/js/labelsConfig.js",
+      "SourceId": "TAREFASAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
+      "BasePath": "_content/TAREFASAPI",
+      "RelativePath": "js/labelsConfig.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/js/labelsConfig.js"
+    }
+  ]
 }

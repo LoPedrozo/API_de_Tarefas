@@ -19,6 +19,8 @@
 *.nupkg
 *.snupkg
 /packages/
+node_modules/
+.tools/
 
 # OS-generated files
 .DS_Store

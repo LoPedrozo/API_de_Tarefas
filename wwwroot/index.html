@@ -1,0 +1,941 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O Grillo - Kanban</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* Variáveis de cor e tema */
+        :root {
+            --green-700: #2E7D32;
+            --green-200: #A5D6A7;
+            --white: #FFFFFF;
+            --gray-50: #F4F6F6;
+            --gray-500: #9AA0A6;
+            --shadow: rgba(0,0,0,.08);
+        }
+
+        /* Reset e estilos globais */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--gray-50);
+            color: var(--green-700);
+            line-height: 1.5;
+            transition: all 150ms ease;
+        }
+        body.compact .card {
+            padding: 8px;
+            min-height: 80px;
+        }
+        body.compact .card-title {
+            font-size: 14px;
+        }
+        body.compact .card-description {
+            font-size: 12px;
+        }
+
+        /* Header fixo */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--white);
+            padding: 16px;
+            box-shadow: 0 2px 8px var(--shadow);
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 100;
+            flex-wrap: wrap;
+        }
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--green-700);
+        }
+        .search {
+            flex: 1;
+            min-width: 200px;
+        }
+        .search input {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .filter {
+            display: flex;
+            gap: 8px;
+            align-items: center;
+        }
+        .filter select {
+            padding: 8px 12px;
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        .density-toggle {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .density-toggle button {
+            padding: 8px 12px;
+            background: var(--green-200);
+            color: var(--green-700);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .reset-demo {
+            padding: 8px 12px;
+            background: var(--green-700);
+            color: var(--white);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .help {
+            position: relative;
+        }
+        .help button {
+            padding: 8px;
+            background: var(--gray-50);
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        .help-tooltip {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: var(--white);
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            padding: 12px;
+            box-shadow: 0 4px 12px var(--shadow);
+            font-size: 12px;
+            white-space: pre-line;
+            z-index: 200;
+        }
+        .help:hover .help-tooltip {
+            display: block;
+        }
+
+        /* Main e colunas */
+        main {
+            margin-top: 80px;
+            padding: 16px;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 16px;
+            min-height: calc(100vh - 80px);
+        }
+        @media (max-width: 1023px) {
+            main {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        @media (max-width: 599px) {
+            main {
+                grid-template-columns: 1fr;
+            }
+            .tabs {
+                display: flex;
+                justify-content: center;
+                margin-bottom: 16px;
+            }
+            .tab {
+                padding: 8px 16px;
+                background: var(--white);
+                border: 1px solid var(--gray-500);
+                border-radius: 8px 8px 0 0;
+                cursor: pointer;
+                font-size: 14px;
+            }
+            .tab.active {
+                background: var(--green-200);
+                color: var(--green-700);
+            }
+            .column {
+                display: none;
+            }
+            .column.active {
+                display: block;
+            }
+        }
+        .column {
+            background: var(--white);
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px var(--shadow);
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        .column h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        .column[data-testid="column-todo"] h2 { color: var(--green-700); }
+        .column[data-testid="column-in-progress"] h2 { color: var(--green-700); }
+        .column[data-testid="column-done"] h2 { color: var(--green-700); }
+        .add-task {
+            padding: 8px 12px;
+            background: var(--green-200);
+            color: var(--green-700);
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-bottom: 16px;
+            align-self: flex-start;
+        }
+        .cards {
+            flex: 1;
+            role: list;
+            min-height: 200px;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--gray-50);
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 4px var(--shadow);
+            cursor: grab;
+            transition: all 150ms ease;
+            role: listitem;
+            position: relative;
+        }
+        .card:hover {
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        .card.dragging {
+            opacity: 0.5;
+            transform: rotate(5deg);
+        }
+        .card-title {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 4px;
+            outline: none;
+            border: none;
+            background: transparent;
+        }
+        .card-description {
+            font-size: 14px;
+            color: var(--gray-500);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .card-tags {
+            display: flex;
+            gap: 4px;
+            margin-bottom: 8px;
+        }
+        .tag {
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        .tag.verde { background: var(--green-200); color: var(--green-700); }
+        .tag.amarelo { background: #FFF3CD; color: #856404; }
+        .tag.cinza { background: var(--gray-500); color: var(--white); }
+        .card-priority {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 10px;
+            border-radius: 999px;
+            color: var(--white);
+            text-transform: uppercase;
+        }
+        .card-priority.priority-baixa { background: #81c784; }
+        .card-priority.priority-medio { background: #ffb74d; }
+        .card-priority.priority-alta { background: #ef5350; }
+        .card-priority.priority-critica { background: #c2185b; }
+        .card-menu {
+            position: absolute;
+            top: 8px;
+            right: 32px;
+            cursor: pointer;
+            font-size: 18px;
+        }
+        .card-menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow);
+            z-index: 50;
+        }
+        .card-menu:hover .card-menu-dropdown {
+            display: block;
+        }
+        .card-menu-dropdown button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            background: none;
+            border: none;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .card-menu-dropdown button:hover {
+            background: var(--gray-50);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 300;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal.show {
+            display: flex;
+        }
+        .modal-content {
+            background: var(--white);
+            padding: 24px;
+            border-radius: 12px;
+            box-shadow: 0 4px 16px var(--shadow);
+            width: 90%;
+            max-width: 400px;
+        }
+        .modal h3 {
+            margin-bottom: 16px;
+            font-size: 20px;
+        }
+        .modal label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .modal input, .modal textarea, .modal select {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+        .modal textarea {
+            resize: vertical;
+            min-height: 80px;
+        }
+        .modal-buttons {
+            display: flex;
+            gap: 8px;
+            justify-content: flex-end;
+        }
+        .modal-buttons button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+        .modal-save {
+            background: var(--green-700);
+            color: var(--white);
+        }
+        .modal-cancel {
+            background: var(--gray-50);
+            color: var(--gray-500);
+        }
+        .modal-error {
+            color: #D32F2F;
+            font-size: 12px;
+            margin-top: -12px;
+            margin-bottom: 16px;
+            role: alert;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 16px;
+            right: 16px;
+            background: var(--green-700);
+            color: var(--white);
+            padding: 12px 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px var(--shadow);
+            opacity: 0;
+            transform: translateY(100%);
+            transition: all 300ms ease;
+            z-index: 400;
+        }
+        .toast.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .toast.error {
+            background: #D32F2F;
+        }
+
+        /* Foco visível */
+        *:focus {
+            outline: 2px solid var(--green-700);
+            outline-offset: 2px;
+        }
+        button:focus, input:focus, select:focus, textarea:focus {
+            outline: 2px solid var(--green-700);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">O Grillo</div>
+        <div class="search">
+            <input type="text" placeholder="Buscar tarefas..." data-testid="search">
+        </div>
+        <div class="filter">
+            <label for="tag-filter">Etiqueta:</label>
+            <select id="tag-filter" data-testid="tag-filter">
+                <option value="">Todas</option>
+            </select>
+            <label for="priority-filter">Prioridade:</label>
+            <select id="priority-filter" data-testid="priority-filter">
+                <option value="">Todas</option>
+                <option value="baixa">Baixa</option>
+                <option value="medio">Média</option>
+                <option value="alta">Alta</option>
+                <option value="critica">Crítica</option>
+            </select>
+            <label for="status-filter">Status:</label>
+            <select id="status-filter" data-testid="status-filter">
+                <option value="">Todos</option>
+                <option value="todo">A Fazer</option>
+                <option value="in-progress">Em Progresso</option>
+                <option value="done">Concluído</option>
+            </select>
+        </div>
+        <div class="density-toggle">
+            <button data-testid="density-toggle">Densidade: Padrão</button>
+        </div>
+        <button class="reset-demo" data-testid="reset-demo">Recarregar dados</button>
+        <div class="help">
+            <button aria-label="Ajuda com atalhos">?</button>
+            <div class="help-tooltip">
+Atalhos úteis:
+N → Nova tarefa
+Esc → Fecha modal
+Ctrl + F → Foco na busca
+
+Como testar:
+- Use o campo de busca e o filtro por etiqueta.
+- Clique em + Nova tarefa para criar em qualquer coluna.
+- Edite/exclua usando o menu ⋮ de cada card.
+- "Recarregar dados" sincroniza novamente com a API.
+- Confira a responsividade redimensionando a janela.
+            </div>
+        </div>
+    </header>
+    <main>
+        <div class="tabs" style="display: none;">
+            <button class="tab active" data-column="todo">A Fazer</button>
+            <button class="tab" data-column="in-progress">Em Progresso</button>
+            <button class="tab" data-column="done">Concluído</button>
+        </div>
+        <div class="column" data-testid="column-todo" data-status="todo">
+            <h2>A Fazer</h2>
+            <button class="add-task" data-testid="add-task" aria-label="Adicionar nova tarefa">+ Nova Tarefa</button>
+            <div class="cards"></div>
+        </div>
+        <div class="column" data-testid="column-in-progress" data-status="in-progress">
+            <h2>Em Progresso</h2>
+            <button class="add-task" data-testid="add-task" aria-label="Adicionar nova tarefa">+ Nova Tarefa</button>
+            <div class="cards"></div>
+        </div>
+        <div class="column" data-testid="column-done" data-status="done">
+            <h2>Concluído</h2>
+            <button class="add-task" data-testid="add-task" aria-label="Adicionar nova tarefa">+ Nova Tarefa</button>
+            <div class="cards"></div>
+        </div>
+    </main>
+    <div class="modal" id="task-modal">
+        <div class="modal-content">
+            <h3 id="modal-title">Nova Tarefa</h3>
+            <form id="task-form">
+                <label for="task-title">Título *</label>
+                <input type="text" id="task-title" required>
+                <div class="modal-error" id="title-error"></div>
+                <label for="task-description">Descrição</label>
+                <textarea id="task-description"></textarea>
+                <label for="task-tag">Etiqueta</label>
+                <select id="task-tag">
+                    <option value="verde">Verde</option>
+                    <option value="amarelo">Amarelo</option>
+                    <option value="cinza">Cinza</option>
+                </select>
+                <label for="task-status">Status</label>
+                <select id="task-status">
+                    <option value="todo">A Fazer</option>
+                    <option value="in-progress">Em Progresso</option>
+                    <option value="done">Concluído</option>
+                </select>
+                <label for="task-priority">Prioridade</label>
+                <select id="task-priority">
+                    <option value="baixa">Baixa</option>
+                    <option value="medio">Média</option>
+                    <option value="alta">Alta</option>
+                    <option value="critica">Crítica</option>
+                </select>
+                <div class="modal-buttons">
+                    <button type="button" class="modal-cancel" data-testid="modal-cancel">Cancelar</button>
+                    <button type="submit" class="modal-save" data-testid="modal-save">Salvar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        const API_URL = `${window.location.origin}/api/tarefas`;
+        const STATUS_TO_API = {
+            'todo': 'Não concluída',
+            'in-progress': 'Em progresso',
+            'done': 'Concluída'
+        };
+        const TAG_OPTIONS = ['verde', 'amarelo', 'cinza'];
+        const PRIORITY_TO_API = {
+            'baixa': 'Baixa',
+            'medio': 'Medio',
+            'alta': 'Alta',
+            'critica': 'Critica'
+        };
+        const PRIORITY_LABEL = {
+            'baixa': 'Baixa',
+            'medio': 'Média',
+            'alta': 'Alta',
+            'critica': 'Crítica'
+        };
+
+        let tasks = [];
+        let searchTerm = '';
+        let tagFilterValue = '';
+        let priorityFilterValue = '';
+        let statusFilterValue = '';
+        let currentTaskId = null;
+
+        let modal;
+        let modalTitle;
+        let form;
+        let titleInput;
+        let descriptionInput;
+        let tagSelect;
+        let prioritySelect;
+        let titleError;
+        let statusSelect;
+        let toast;
+        let searchInput;
+        let tagFilter;
+        let priorityFilter;
+        let statusFilter;
+        let densityButton;
+        let resetButton;
+
+        document.addEventListener('DOMContentLoaded', () => {
+            cacheDom();
+            bindEvents();
+            loadTasks();
+        });
+
+        function cacheDom() {
+            modal = document.getElementById('task-modal');
+            modalTitle = document.getElementById('modal-title');
+            form = document.getElementById('task-form');
+            titleInput = document.getElementById('task-title');
+            descriptionInput = document.getElementById('task-description');
+            tagSelect = document.getElementById('task-tag');
+            prioritySelect = document.getElementById('task-priority');
+            statusSelect = document.getElementById('task-status');
+            titleError = document.getElementById('title-error');
+            toast = document.getElementById('toast');
+            searchInput = document.querySelector('[data-testid="search"]');
+            tagFilter = document.querySelector('[data-testid="tag-filter"]');
+            priorityFilter = document.querySelector('[data-testid="priority-filter"]');
+            statusFilter = document.querySelector('[data-testid="status-filter"]');
+            densityButton = document.querySelector('[data-testid="density-toggle"]');
+            resetButton = document.querySelector('[data-testid="reset-demo"]');
+        }
+
+        function bindEvents() {
+            document.querySelectorAll('.add-task').forEach(button => {
+                button.addEventListener('click', () => {
+                    const columnStatus = button.closest('.column')?.dataset.status ?? 'todo';
+                    openModal(null, columnStatus);
+                });
+            });
+
+            form.addEventListener('submit', handleSubmit);
+            document.querySelector('[data-testid="modal-cancel"]').addEventListener('click', closeModal);
+            modal.addEventListener('click', event => {
+                if (event.target === modal) closeModal();
+            });
+
+            searchInput.addEventListener('input', event => {
+                searchTerm = event.target.value.toLowerCase();
+                renderColumns();
+            });
+
+            tagFilter.addEventListener('change', event => {
+                tagFilterValue = event.target.value;
+                renderColumns();
+            });
+
+            priorityFilter.addEventListener('change', event => {
+                priorityFilterValue = event.target.value;
+                renderColumns();
+            });
+
+            statusFilter.addEventListener('change', event => {
+                statusFilterValue = event.target.value;
+                renderColumns();
+            });
+
+            densityButton.addEventListener('click', () => {
+                document.body.classList.toggle('compact');
+                densityButton.textContent = document.body.classList.contains('compact')
+                    ? 'Densidade: Compacta'
+                    : 'Densidade: Padrão';
+            });
+
+            resetButton.addEventListener('click', () => loadTasks(true));
+
+            document.addEventListener('keydown', event => {
+                if (event.key === 'Escape') {
+                    closeModal();
+                    return;
+                }
+
+                if (event.key.toLowerCase() === 'n' && !modal.classList.contains('show')) {
+                    openModal();
+                }
+            });
+        }
+
+        async function loadTasks(showFeedback = false) {
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) throw new Error('Erro ao consultar a API.');
+                const payload = await response.json();
+                tasks = payload.map(mapApiTaskToUi);
+                populateTagFilter();
+                renderColumns();
+
+                if (showFeedback) {
+                    showToast('Tarefas sincronizadas com a API.');
+                }
+            } catch (error) {
+                console.error(error);
+                showToast('Não foi possível carregar as tarefas.', true);
+            }
+        }
+
+        function mapApiTaskToUi(dto) {
+            const firstTag = dto.tags && dto.tags.length ? dto.tags[0] : null;
+            const tagLabel = firstTag ?? 'Sem etiqueta';
+            const tagColor = normalizeTagColor(firstTag);
+            const priority = normalizePriority(dto.prioridade);
+            return {
+                id: dto.id,
+                title: dto.titulo ?? 'Sem título',
+                description: dto.descricao ?? '',
+                status: normalizeStatus(dto.status),
+                tagColor,
+                tagLabel,
+                priority,
+                priorityLabel: PRIORITY_LABEL[priority]
+            };
+        }
+
+        function normalizeStatus(value) {
+            if (!value) return 'todo';
+            const normalized = value
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase();
+
+            if (normalized.includes('progres') || normalized.includes('andament')) {
+                return 'in-progress';
+            }
+
+            if (normalized.includes('concluida') && !normalized.includes('nao')) {
+                return 'done';
+            }
+
+            return 'todo';
+        }
+
+        function mapUiTaskToApi(task) {
+            return {
+                titulo: task.title,
+                descricao: task.description,
+                status: STATUS_TO_API[task.status] ?? STATUS_TO_API.todo,
+                prioridade: PRIORITY_TO_API[task.priority] ?? PRIORITY_TO_API.medio,
+                tags: task.tagColor ? [task.tagColor] : []
+            };
+        }
+
+        function populateTagFilter() {
+            if (!tagFilter) return;
+
+            const previous = tagFilterValue;
+            const uniqueTags = Array.from(new Set(
+                tasks
+                    .map(task => task.tagLabel ?? 'Sem etiqueta')
+                    .filter(Boolean)
+            )).sort((a, b) => a.localeCompare(b, 'pt-BR'));
+
+            tagFilter.innerHTML = '';
+            const defaultOption = document.createElement('option');
+            defaultOption.value = '';
+            defaultOption.textContent = 'Todas';
+            tagFilter.appendChild(defaultOption);
+
+            uniqueTags.forEach(label => {
+                const option = document.createElement('option');
+                option.value = label;
+                option.textContent = label;
+                tagFilter.appendChild(option);
+            });
+
+            if (previous && uniqueTags.includes(previous)) {
+                tagFilter.value = previous;
+            } else {
+                tagFilter.value = '';
+                tagFilterValue = '';
+            }
+        }
+
+        function renderColumns() {
+            document.querySelectorAll('.column').forEach(column => {
+                const columnStatus = column.dataset.status;
+                const wrapper = column.querySelector('.cards');
+                wrapper.innerHTML = '';
+
+                const filtered = tasks
+                    .filter(task => task.status === columnStatus)
+                    .filter(task => {
+                        const matchesSearch = !searchTerm
+                            || task.title.toLowerCase().includes(searchTerm)
+                            || task.description.toLowerCase().includes(searchTerm);
+                        const tagLabel = task.tagLabel ?? 'Sem etiqueta';
+                        const matchesTag = !tagFilterValue || tagLabel === tagFilterValue;
+                        const matchesPriority = !priorityFilterValue || task.priority === priorityFilterValue;
+                        const matchesStatus = !statusFilterValue || task.status === statusFilterValue;
+                        return matchesSearch && matchesTag && matchesPriority && matchesStatus;
+                    });
+
+                if (!filtered.length) {
+                    const empty = document.createElement('p');
+                    empty.className = 'card-description';
+                    empty.textContent = 'Sem tarefas aqui.';
+                    wrapper.appendChild(empty);
+                    return;
+                }
+
+                filtered.forEach(task => wrapper.appendChild(createCard(task)));
+            });
+        }
+
+        function createCard(task) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.dataset.id = task.id;
+            card.tabIndex = 0;
+
+            const title = document.createElement('div');
+            title.className = 'card-title';
+            title.textContent = task.title;
+            card.appendChild(title);
+
+            if (task.description) {
+                const description = document.createElement('p');
+                description.className = 'card-description';
+                description.textContent = task.description;
+                card.appendChild(description);
+            }
+
+            const tagsContainer = document.createElement('div');
+            tagsContainer.className = 'card-tags';
+            const tag = document.createElement('span');
+            tag.className = `tag ${task.tagColor}`;
+            tag.textContent = task.tagLabel ?? task.tagColor;
+            tagsContainer.appendChild(tag);
+            card.appendChild(tagsContainer);
+
+            const priority = document.createElement('span');
+            priority.className = `card-priority priority-${task.priority}`;
+            const priorityLabel = task.priorityLabel ?? PRIORITY_LABEL[task.priority] ?? '';
+            priority.textContent = priorityLabel;
+            priority.setAttribute('aria-label', `Prioridade ${priorityLabel}`);
+            card.appendChild(priority);
+
+            const menu = document.createElement('div');
+            menu.className = 'card-menu';
+            menu.innerHTML = '&vellip;';
+            const dropdown = document.createElement('div');
+            dropdown.className = 'card-menu-dropdown';
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Editar';
+            editButton.addEventListener('click', event => {
+                event.stopPropagation();
+                openModal(task);
+            });
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Excluir';
+            deleteButton.addEventListener('click', async event => {
+                event.stopPropagation();
+                await deleteTask(task.id);
+            });
+            dropdown.appendChild(editButton);
+            dropdown.appendChild(deleteButton);
+            menu.appendChild(dropdown);
+            card.appendChild(menu);
+
+            card.addEventListener('click', () => openModal(task));
+
+            return card;
+        }
+
+        function openModal(task = null, status = 'todo') {
+            currentTaskId = task?.id ?? null;
+            modalTitle.textContent = currentTaskId ? 'Editar Tarefa' : 'Nova Tarefa';
+            titleInput.value = task?.title ?? '';
+            descriptionInput.value = task?.description ?? '';
+            const defaultStatus = task?.status ?? status ?? 'todo';
+            tagSelect.value = task?.tagColor ?? 'verde';
+            statusSelect.value = defaultStatus;
+            prioritySelect.value = task?.priority ?? 'medio';
+            titleError.textContent = '';
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            modal.classList.remove('show');
+            currentTaskId = null;
+            form.reset();
+            statusSelect.value = 'todo';
+            prioritySelect.value = 'medio';
+            tagSelect.value = 'verde';
+            titleError.textContent = '';
+        }
+
+        async function handleSubmit(event) {
+            event.preventDefault();
+            titleError.textContent = '';
+
+            const title = titleInput.value.trim();
+            if (!title) {
+                titleError.textContent = 'O título é obrigatório.';
+                return;
+            }
+
+            const taskPayload = {
+                id: currentTaskId,
+                title,
+                description: descriptionInput.value.trim(),
+                status: statusSelect.value,
+                tagColor: tagSelect.value,
+                priority: prioritySelect.value
+            };
+
+            const isEditing = Boolean(taskPayload.id);
+
+            try {
+                await persistTask(taskPayload);
+                closeModal();
+                await loadTasks();
+                showToast(isEditing ? 'Tarefa atualizada.' : 'Tarefa criada.');
+            } catch (error) {
+                console.error(error);
+                showToast('Não foi possível salvar a tarefa.', true);
+            }
+        }
+
+        async function persistTask(task) {
+            const method = task.id ? 'PUT' : 'POST';
+            const url = task.id ? `${API_URL}/${task.id}` : API_URL;
+            const response = await fetch(url, {
+                method,
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(mapUiTaskToApi(task))
+            });
+
+            if (!response.ok) {
+                throw new Error('Erro ao persistir a tarefa.');
+            }
+        }
+
+        async function deleteTask(id) {
+            if (!confirm('Deseja realmente excluir esta tarefa?')) return;
+
+            try {
+                const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
+                if (!response.ok) throw new Error('Erro ao excluir.');
+                await loadTasks();
+                showToast('Tarefa excluída.');
+            } catch (error) {
+                console.error(error);
+                showToast('Não foi possível excluir.', true);
+            }
+        }
+
+        function normalizePriority(value) {
+            const normalized = (value ?? '').toString().trim().toLowerCase();
+            if (normalized.startsWith('crit')) return 'critica';
+            if (normalized.startsWith('alt')) return 'alta';
+            if (normalized.startsWith('baix')) return 'baixa';
+            if (normalized.startsWith('med')) return 'medio';
+            return 'medio';
+        }
+
+        function normalizeTagColor(value) {
+            const normalized = (value ?? '').toString().trim().toLowerCase();
+            return TAG_OPTIONS.includes(normalized) ? normalized : 'verde';
+        }
+
+        function showToast(message, isError = false) {
+            toast.textContent = message;
+            toast.classList.toggle('error', isError);
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3200);
+        }
+    </script>
+</body>
+</html>

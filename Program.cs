@@ -10,6 +10,13 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+builder.Services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+        policy.AllowAnyOrigin()
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<TarefasDbContext>(options =>
@@ -30,11 +37,13 @@ using (var scope = app.Services.CreateScope())
     {
         var prioridades = Enum.GetValues<Prioridade>();
 
+        var statusOpcoes = new[] { "Não concluída", "Em progresso", "Concluída" };
+
         var tarefasSeed = Enumerable.Range(1, 25).Select(i => new Tarefa
         {
             Titulo = $"Tarefa {i}",
             Descricao = $"Descrição inicial da tarefa {i}.",
-            Status = i % 3 == 0 ? "Concluída" : "Não concluída",
+            Status = statusOpcoes[(i - 1) % statusOpcoes.Length],
             Prioridade = prioridades[(i - 1) % prioridades.Length],
             Responsavel = $"Responsável {((i - 1) % 5) + 1}",
             Tags = new() { $"Tag{(i % 3) + 1}", "Inicial" },
@@ -54,7 +63,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.MapGet("/", () => Results.Redirect("/swagger", permanent: false));
+app.UseCors();
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 ROTA_GET.Map(app);
 ROTA_POST.Map(app);

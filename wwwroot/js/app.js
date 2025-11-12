@@ -154,16 +154,6 @@ function bindEvents() {
 
   elements.resetButton.addEventListener('click', () => loadTasks(true));
 
-  document.addEventListener('keydown', event => {
-    if (event.key === 'Escape') {
-      closeModal();
-      return;
-    }
-    if (event.key.toLowerCase() === 'n' && !elements.modal.classList.contains('show')) {
-      openModal(null, 'todo');
-    }
-  });
-
   elements.extraTagAddButton.addEventListener('click', () => addExtraTag(elements.extraTagInput.value));
   elements.extraTagInput.addEventListener('keydown', event => {
     if (event.key === 'Enter') {

@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+      <link rel="stylesheet" href="styles.css">
+
     <style>
         /* Variáveis de cor e tema */
         :root {
@@ -145,39 +147,160 @@
             gap: 16px;
             min-height: calc(100vh - 80px);
         }
+
+        /* Abas - por padrão escondidas (desktop) */
+        .tabs {
+            grid-column: 1 / -1;
+            display: none;               /* desktop: não mostra */
+            justify-content: center;
+            margin-bottom: 16px;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .tab {
+            padding: 8px 16px;
+            background: var(--white);
+            border: 1px solid var(--gray-500);
+            border-radius: 999px;
+            cursor: pointer;
+            font-size: 14px;
+            white-space: nowrap;
+        }
+        .tab.active {
+            background: var(--green-200);
+            color: var(--green-700);
+        }
+
         @media (max-width: 1023px) {
             main {
                 grid-template-columns: 1fr 1fr;
             }
         }
-        @media (max-width: 599px) {
-            main {
-                grid-template-columns: 1fr;
+
+        @media (max-width: 768px) {
+            header {
+                padding: 12px;
+                gap: 8px;
             }
+            .logo {
+                font-size: 20px;
+            }
+            .search {
+                min-width: 150px;
+            }
+            .search input {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .filter {
+                gap: 4px;
+            }
+            .filter label {
+                display: none;
+            }
+            .filter select {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .density-toggle button,
+            .reset-demo,
+            .help button {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            main {
+                margin-top: 70px;
+                padding: 12px;
+                gap: 12px;
+            }
+        }
+
+        @media (max-width: 599px) {
+            header {
+                padding: 10px;
+                gap: 6px;
+                justify-content: flex-start;
+            }
+            .logo {
+                font-size: 18px;
+                min-width: 100%;
+                margin-bottom: 4px;
+            }
+            .search {
+                min-width: calc(100% - 60px);
+            }
+            .search input {
+                padding: 6px 10px;
+                font-size: 12px;
+            }
+            .filter {
+                display: none;
+            }
+            .density-toggle {
+                display: none;
+            }
+            .reset-demo {
+                padding: 6px 10px;
+                font-size: 12px;
+                min-width: auto;
+            }
+            .help {
+                min-width: auto;
+            }
+            .help button {
+                padding: 6px 8px;
+                font-size: 12px;
+            }
+            .help-tooltip {
+                left: auto;
+                right: 0;
+                font-size: 11px;
+                white-space: normal;
+                max-width: 200px;
+            }
+            /* Mais espaço entre header e conteúdo no mobile */
+            main {
+                margin-top: 110px;
+                grid-template-columns: 1fr;
+                padding: 10px 12px;
+                gap: 14px;
+                min-height: calc(100vh - 110px);
+            }
+            /* Tabs APARECEM só no mobile */
             .tabs {
                 display: flex;
                 justify-content: center;
-                margin-bottom: 16px;
+                margin-bottom: 18px;
+                gap: 8px;
             }
             .tab {
-                padding: 8px 16px;
-                background: var(--white);
-                border: 1px solid var(--gray-500);
-                border-radius: 8px 8px 0 0;
-                cursor: pointer;
-                font-size: 14px;
+                padding: 8px 14px;
+                font-size: 13px;
+                flex: 1;
+                text-align: center;
             }
-            .tab.active {
-                background: var(--green-200);
-                color: var(--green-700);
+
+            /* Garantir que botões add-task sejam clicáveis no mobile */
+            .add-task {
+                pointer-events: auto !important;
+                z-index: 10;
+                position: relative;
             }
-            .column {
-                display: none;
+            /* Garantir que cards e menus sejam clicáveis */
+            .card {
+                pointer-events: auto;
             }
-            .column.active {
-                display: block;
+            .card-menu {
+                pointer-events: auto;
+            }
+            .card-menu-dropdown {
+                pointer-events: auto;
+            }
+            .card-menu-dropdown button {
+                pointer-events: auto;
             }
         }
+
         .column {
             background: var(--white);
             border-radius: 12px;
@@ -187,14 +310,31 @@
             display: flex;
             flex-direction: column;
         }
+        /* coluna escondida pelas abas (mobile) */
+        .column.hidden {
+            display: none;
+        }
+
         .column h2 {
             font-size: 18px;
             font-weight: 600;
             margin-bottom: 16px;
         }
+        @media (max-width: 599px) {
+            .column {
+                padding: 14px;
+                border-radius: 10px;
+                min-height: 320px;
+            }
+            .column h2 {
+                font-size: 16px;
+                margin-bottom: 14px;
+            }
+        }
         .column[data-testid="column-todo"] h2 { color: var(--green-700); }
         .column[data-testid="column-in-progress"] h2 { color: var(--green-700); }
         .column[data-testid="column-done"] h2 { color: var(--green-700); }
+
         .add-task {
             padding: 8px 12px;
             background: var(--green-200);
@@ -205,6 +345,15 @@
             font-size: 14px;
             margin-bottom: 16px;
             align-self: flex-start;
+        }
+        @media (max-width: 599px) {
+            .add-task {
+                padding: 8px 10px;
+                font-size: 13px;
+                margin-bottom: 12px;
+                width: 100%;
+                align-self: stretch;
+            }
         }
         .cards {
             flex: 1;
@@ -231,6 +380,12 @@
             opacity: 0.5;
             transform: rotate(5deg);
         }
+        @media (max-width: 599px) {
+            .card {
+                padding: 10px;
+                margin-bottom: 8px;
+            }
+        }
         .card-title {
             font-size: 16px;
             font-weight: 500;
@@ -247,6 +402,14 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             margin-bottom: 8px;
+        }
+        @media (max-width: 599px) {
+            .card-title {
+                font-size: 14px;
+            }
+            .card-description {
+                font-size: 12px;
+            }
         }
         .card-tags {
             display: flex;
@@ -271,6 +434,7 @@
         .chip-color-verde { background: var(--green-200); color: var(--green-700); }
         .chip-color-amarelo { background: #FFF3CD; color: #856404; }
         .chip-color-cinza { background: var(--gray-500); color: var(--white); }
+
         .card-meta {
             display: flex;
             flex-direction: column;
@@ -290,6 +454,11 @@
             gap: 8px;
             margin-top: 10px;
         }
+        @media (max-width: 599px) {
+            .card-footer {
+                gap: 4px;
+            }
+        }
         .pill {
             padding: 4px 10px;
             border-radius: 999px;
@@ -298,6 +467,12 @@
             color: var(--white);
             text-transform: capitalize;
         }
+        @media (max-width: 599px) {
+            .pill {
+                padding: 3px 8px;
+                font-size: 11px;
+            }
+        }
         .pill-status-todo { background: #5C6BC0; }
         .pill-status-in-progress { background: #FFA000; }
         .pill-status-done { background: #43A047; }
@@ -305,6 +480,7 @@
         .pill-priority-medio { background: #29B6F6; }
         .pill-priority-alta { background: #EF5350; }
         .pill-priority-critica { background: #C62828; }
+
         .card-extra-tags {
             display: flex;
             flex-wrap: wrap;
@@ -319,6 +495,13 @@
             font-size: 11px;
             color: var(--green-700);
         }
+        @media (max-width: 599px) {
+            .card-extra-tags .tag-small {
+                padding: 2px 6px;
+                font-size: 10px;
+            }
+        }
+
         .modal-grid {
             display: grid;
             gap: 12px;
@@ -327,6 +510,11 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 12px;
+        }
+        @media (max-width: 599px) {
+            .modal-row {
+                grid-template-columns: 1fr;
+            }
         }
         .tag-input {
             display: flex;
@@ -364,6 +552,7 @@
             font-size: 12px;
             margin-left: 4px;
         }
+
         .card-priority {
             position: absolute;
             top: 8px;
@@ -375,16 +564,32 @@
             color: var(--white);
             text-transform: uppercase;
         }
+        @media (max-width: 599px) {
+            .card-priority {
+                font-size: 10px;
+                padding: 2px 6px;
+                top: 6px;
+                right: 6px;
+            }
+        }
         .card-priority.priority-baixa { background: #81c784; }
         .card-priority.priority-medio { background: #ffb74d; }
         .card-priority.priority-alta { background: #ef5350; }
         .card-priority.priority-critica { background: #c2185b; }
+
         .card-menu {
             position: absolute;
             top: 8px;
             right: 32px;
             cursor: pointer;
             font-size: 18px;
+        }
+        @media (max-width: 599px) {
+            .card-menu {
+                top: 6px;
+                right: 26px;
+                font-size: 16px;
+            }
         }
         .card-menu-dropdown {
             display: none;
@@ -442,9 +647,22 @@
             overflow-y: auto;
             box-sizing: border-box;
         }
+        @media (max-width: 599px) {
+            .modal-content {
+                padding: 16px;
+                width: calc(100vw - 20px);
+                max-height: calc(100vh - 20px);
+            }
+        }
         .modal h3 {
             margin-bottom: 16px;
             font-size: 20px;
+        }
+        @media (max-width: 599px) {
+            .modal h3 {
+                font-size: 18px;
+                margin-bottom: 12px;
+            }
         }
         .modal label {
             display: block;
@@ -459,6 +677,13 @@
             margin-bottom: 16px;
             font-size: 14px;
         }
+        @media (max-width: 599px) {
+            .modal input, .modal textarea, .modal select {
+                padding: 8px 10px;
+                font-size: 14px;
+                margin-bottom: 12px;
+            }
+        }
         .modal textarea {
             resize: vertical;
             min-height: 80px;
@@ -468,12 +693,25 @@
             gap: 8px;
             justify-content: flex-end;
         }
+        @media (max-width: 599px) {
+            .modal-buttons {
+                flex-direction: column-reverse;
+                gap: 8px;
+            }
+        }
         .modal-buttons button {
             padding: 8px 16px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+        }
+        @media (max-width: 599px) {
+            .modal-buttons button {
+                padding: 10px;
+                font-size: 14px;
+                width: 100%;
+            }
         }
         .modal-save {
             background: var(--green-700);
@@ -506,6 +744,15 @@
             transition: all 300ms ease;
             z-index: 400;
         }
+        @media (max-width: 599px) {
+            .toast {
+                bottom: 12px;
+                right: 12px;
+                left: 12px;
+                padding: 12px 16px;
+                font-size: 14px;
+            }
+        }
         .toast.show {
             opacity: 1;
             transform: translateY(0);
@@ -521,7 +768,32 @@
         }
         button:focus, input:focus, select:focus, textarea:focus {
             outline: 2px solid var(--green-700);
+
+            
         }
+
+        /* Ajustar o botão + Nova Tarefa no mobile */
+@media (max-width: 599px) {
+    .column .add-task {
+        width: auto;               /* não preencher toda largura */
+        align-self: center;        /* centraliza */
+        padding: 6px 12px;         /* tamanho menor */
+        font-size: 12px;           /* diminui texto */
+        margin-bottom: 10px;       /* mais compacto */
+        border-radius: 6px;        /* deixa menos "oval" */
+    }
+
+    /* Diminui também o bloco da coluna para o card não ficar gigante */
+    .column {
+        padding-top: 10px;
+        padding-bottom: 10px;
+    }
+
+    /* Título da coluna mais compacto */
+    .column h2 {
+        margin-bottom: 8px;
+    }
+}
     </style>
 </head>
 <body>
@@ -568,11 +840,14 @@ Como testar:
         </div>
     </header>
     <main>
-        <div class="tabs" style="display: none;">
-            <button class="tab active" data-column="todo">A Fazer</button>
+        <!-- Abas: só aparecem no mobile (< 600px) -->
+        <div class="tabs">
+            <button class="tab active" data-column="all">Todos</button>
+            <button class="tab" data-column="todo">A Fazer</button>
             <button class="tab" data-column="in-progress">Em Progresso</button>
             <button class="tab" data-column="done">Concluído</button>
         </div>
+
         <div class="column" data-testid="column-todo" data-status="todo">
             <h2>A Fazer</h2>
             <button class="add-task" data-testid="add-task" aria-label="Adicionar nova tarefa">+ Nova Tarefa</button>
@@ -589,6 +864,7 @@ Como testar:
             <div class="cards"></div>
         </div>
     </main>
+
     <div class="modal" id="task-modal">
         <div class="modal-content">
             <h3 id="modal-title">Nova Tarefa</h3>
@@ -596,18 +872,23 @@ Como testar:
                 <label for="task-title">Título *</label>
                 <input type="text" id="task-title" required>
                 <div class="modal-error" id="title-error"></div>
+
                 <label for="task-description">Descrição</label>
                 <textarea id="task-description"></textarea>
+
                 <label for="task-responsavel">Responsável</label>
                 <input type="text" id="task-responsavel" placeholder="Nome do responsável">
+
                 <label for="task-label">Etiqueta</label>
                 <select id="task-label"></select>
+
                 <label for="task-status">Status</label>
                 <select id="task-status">
                     <option value="todo">A Fazer</option>
                     <option value="in-progress">Em Progresso</option>
                     <option value="done">Concluído</option>
                 </select>
+
                 <label for="task-priority">Prioridade</label>
                 <select id="task-priority">
                     <option value="baixa">Baixa</option>
@@ -615,8 +896,10 @@ Como testar:
                     <option value="alta">Alta</option>
                     <option value="critica">Crítica</option>
                 </select>
+
                 <label for="task-data-criacao">Data de criação *</label>
                 <input type="date" id="task-data-criacao" required>
+
                 <div class="modal-row">
                     <div>
                         <label for="task-data-vencimento">Data de vencimento</label>
@@ -627,18 +910,22 @@ Como testar:
                         <input type="date" id="task-data-conclusao">
                     </div>
                 </div>
+
                 <label for="task-estimativa">Estimativa (horas)</label>
                 <input type="number" id="task-estimativa" min="0" step="0.5" placeholder="Ex.: 4">
+
                 <div class="modal-toggle">
                     <input type="checkbox" id="task-arquivada">
                     <label for="task-arquivada" style="margin:0;">Arquivada</label>
                 </div>
+
                 <label for="extra-tag-input">Tags adicionais</label>
                 <div class="tag-input">
                     <input type="text" id="extra-tag-input" placeholder="Digite e pressione Enter">
                     <button type="button" id="extra-tag-add">Adicionar</button>
                 </div>
                 <div id="extra-tags-list" class="modal-tags"></div>
+
                 <div class="modal-buttons">
                     <button type="button" class="modal-cancel" data-testid="modal-cancel">Cancelar</button>
                     <button type="submit" class="modal-save" data-testid="modal-save">Salvar</button>
@@ -646,6 +933,7 @@ Como testar:
             </form>
         </div>
     </div>
+
     <div class="toast" id="toast"></div>
     <script type="module" src="js/app.js"></script>
 </body>

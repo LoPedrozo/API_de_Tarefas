@@ -7,7 +7,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-      <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 
     <style>
         /* Variáveis de cor e tema */
@@ -64,7 +64,16 @@
             font-size: 24px;
             font-weight: 600;
             color: var(--green-700);
+            display: flex;
+            align-items: center;
         }
+        /* Added logo image styling */
+        .logo img {
+            height: 56px; /* Increased from 32px to 56px for better visibility */
+            width: auto;
+            display: block;
+        }
+        /* </CHANGE> */
         .search {
             flex: 1;
             min-width: 200px;
@@ -152,7 +161,7 @@
         /* Abas - por padrão escondidas (desktop) */
         .tabs {
             grid-column: 1 / -1;
-            display: none;               /* desktop: não mostra */
+            display: none;
             justify-content: center;
             margin-bottom: 16px;
             gap: 8px;
@@ -185,6 +194,9 @@
             }
             .logo {
                 font-size: 20px;
+            }
+            .logo img {
+                height: 48px; /* Increased from 28px to 48px for tablets */
             }
             .search {
                 min-width: 150px;
@@ -227,6 +239,9 @@
                 min-width: 100%;
                 margin-bottom: 4px;
             }
+            .logo img {
+                height: 40px; /* Increased from 24px to 40px for mobile */
+            }
             .search {
                 min-width: calc(100% - 60px);
             }
@@ -259,7 +274,6 @@
                 white-space: normal;
                 max-width: 200px;
             }
-            /* Mais espaço entre header e conteúdo no mobile */
             main {
                 margin-top: 110px;
                 grid-template-columns: 1fr;
@@ -267,7 +281,6 @@
                 gap: 14px;
                 min-height: calc(100vh - 110px);
             }
-            /* Tabs APARECEM só no mobile */
             .tabs {
                 display: flex;
                 justify-content: center;
@@ -280,14 +293,11 @@
                 flex: 1;
                 text-align: center;
             }
-
-            /* Garantir que botões add-task sejam clicáveis no mobile */
             .add-task {
                 pointer-events: auto !important;
                 z-index: 10;
                 position: relative;
             }
-            /* Garantir que cards e menus sejam clicáveis */
             .card {
                 pointer-events: auto;
             }
@@ -311,7 +321,6 @@
             display: flex;
             flex-direction: column;
         }
-        /* coluna escondida pelas abas (mobile) */
         .column.hidden {
             display: none;
         }
@@ -365,7 +374,6 @@
             gap: 8px;
         }
 
-        /* Cards */
         .card {
             background: var(--gray-50);
             border-radius: 8px;
@@ -629,7 +637,6 @@
             background: var(--gray-50);
         }
 
-        /* Modal */
         .modal {
             display: none;
             position: fixed;
@@ -739,7 +746,6 @@
             role: alert;
         }
 
-        /* Confirm dialog */
         .confirm-overlay {
             position: fixed;
             inset: 0;
@@ -791,7 +797,6 @@
             color: var(--white);
         }
 
-        /* Toast */
         .toast {
             position: fixed;
             bottom: 16px;
@@ -823,44 +828,42 @@
             background: #D32F2F;
         }
 
-        /* Foco visível */
         *:focus {
             outline: 2px solid var(--green-700);
             outline-offset: 2px;
         }
         button:focus, input:focus, select:focus, textarea:focus {
             outline: 2px solid var(--green-700);
-
-            
         }
 
-        /* Ajustar o botão + Nova Tarefa no mobile */
-@media (max-width: 599px) {
-    .column .add-task {
-        width: auto;               /* não preencher toda largura */
-        align-self: center;        /* centraliza */
-        padding: 6px 12px;         /* tamanho menor */
-        font-size: 12px;           /* diminui texto */
-        margin-bottom: 10px;       /* mais compacto */
-        border-radius: 6px;        /* deixa menos "oval" */
-    }
+        @media (max-width: 599px) {
+            .column .add-task {
+                width: auto;
+                align-self: center;
+                padding: 6px 12px;
+                font-size: 12px;
+                margin-bottom: 10px;
+                border-radius: 6px;
+            }
 
-    /* Diminui também o bloco da coluna para o card não ficar gigante */
-    .column {
-        padding-top: 10px;
-        padding-bottom: 10px;
-    }
+            .column {
+                padding-top: 10px;
+                padding-bottom: 10px;
+            }
 
-    /* Título da coluna mais compacto */
-    .column h2 {
-        margin-bottom: 8px;
-    }
-}
+            .column h2 {
+                margin-bottom: 8px;
+            }
+        }
     </style>
 </head>
 <body>
     <header>
-        <div class="logo">O Grillo</div>
+        <!-- Fixed logo path: changed from .jpg to .png -->
+        <div class="logo"> 
+            <img src="/img/logo_o_grillo.jpg" alt="Logo o grillo">
+        </div>
+        <!-- </CHANGE> -->
         <div class="search">
             <input type="text" placeholder="Buscar tarefas..." data-testid="search">
         </div>

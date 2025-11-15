@@ -32,29 +32,6 @@ using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<TarefasDbContext>();
     await dbContext.Database.EnsureCreatedAsync();
-
-    if (!await dbContext.Tarefas.AnyAsync())
-    {
-        var prioridades = Enum.GetValues<Prioridade>();
-
-        var statusOpcoes = new[] { "Não concluída", "Em progresso", "Concluída" };
-
-        var tarefasSeed = Enumerable.Range(1, 25).Select(i => new Tarefa
-        {
-            Titulo = $"Tarefa {i}",
-            Descricao = $"Descrição inicial da tarefa {i}.",
-            Status = statusOpcoes[(i - 1) % statusOpcoes.Length],
-            Prioridade = prioridades[(i - 1) % prioridades.Length],
-            Responsavel = $"Responsável {((i - 1) % 5) + 1}",
-            Tags = new() { $"Tag{(i % 3) + 1}", "Inicial" },
-            DataVencimento = DateTime.UtcNow.AddDays(i % 7),
-            EstimativaHoras = i % 4 == 0 ? (double?)(i % 6 + 1) : null,
-            DataConclusao = i % 3 == 0 ? DateTime.UtcNow.AddDays(-(i % 5)) : null
-        }).ToList();
-
-        dbContext.Tarefas.AddRange(tarefasSeed);
-        await dbContext.SaveChangesAsync();
-    }
 }
 
 if (app.Environment.IsDevelopment())

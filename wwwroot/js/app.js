@@ -621,8 +621,15 @@ function sanitizeTags(tags) {
 function normalizeStatusFromApi(value) {
   if (!value) return 'todo';
   const normalized = value.normalize('NFD').replace(/[^a-z]/gi, '').toLowerCase();
-  if (normalized.includes('conclu')) return 'done';
-  if (normalized.includes('progres') || normalized.includes('andament')) return 'in-progress';
+  if (normalized.includes('naoconcl') || normalized.includes('afazer') || normalized.includes('todo')) {
+    return 'todo';
+  }
+  if (normalized.includes('progres') || normalized.includes('andament')) {
+    return 'in-progress';
+  }
+  if (normalized.includes('conclu')) {
+    return 'done';
+  }
   return 'todo';
 }
 

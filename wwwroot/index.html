@@ -123,8 +123,8 @@
         .help-tooltip {
             display: none;
             position: absolute;
-            top: 100%;
-            left: 0;
+            top: calc(100% + 8px);
+            right: 0;
             background: var(--white);
             border: 1px solid var(--gray-500);
             border-radius: 8px;
@@ -133,6 +133,7 @@
             font-size: 12px;
             white-space: pre-line;
             z-index: 200;
+            max-width: 260px;
         }
         .help:hover .help-tooltip {
             display: block;

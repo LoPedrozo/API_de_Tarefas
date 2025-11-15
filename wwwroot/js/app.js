@@ -72,8 +72,6 @@ document.addEventListener('DOMContentLoaded', () => {
   cacheDom();
   setupLabelSelectors();
   bindEvents();
-  // Começa sempre mostrando todas as colunas
-  switchTab('all');
   loadTasks();
 });
 
@@ -104,7 +102,6 @@ function cacheDom() {
   elements.densityButton = document.querySelector('[data-testid="density-toggle"]');
   elements.resetButton = document.querySelector('[data-testid="reset-demo"]');
   elements.modalCancelButton = document.querySelector('[data-testid="modal-cancel"]');
-  elements.tabs = document.querySelectorAll('.tab');
 }
 
 function setupLabelSelectors() {
@@ -117,13 +114,6 @@ function bindEvents() {
     button.addEventListener('click', () => {
       const status = button.closest('.column')?.dataset.status ?? 'todo';
       openModal(null, status);
-    });
-  });
-
-  elements.tabs.forEach(tab => {
-    tab.addEventListener('click', () => {
-      const columnName = tab.dataset.column;
-      switchTab(columnName);
     });
   });
 
@@ -169,35 +159,6 @@ function bindEvents() {
     if (event.key === 'Enter') {
       event.preventDefault();
       addExtraTag(elements.extraTagInput.value);
-    }
-  });
-}
-
-function switchTab(columnName) {
-  // Remove active de todas as abas
-  elements.tabs.forEach(tab => tab.classList.remove('active'));
-
-  // Adiciona active na aba selecionada
-  const activeTab = Array.from(elements.tabs).find(tab => tab.dataset.column === columnName);
-  if (activeTab) {
-    activeTab.classList.add('active');
-  }
-
-  const columns = document.querySelectorAll('.column');
-
-  // Se for "Todos", mostra todas as colunas
-  if (columnName === 'all') {
-    columns.forEach(column => column.classList.remove('hidden'));
-    return;
-  }
-
-  // Senão, mostra só a coluna do status selecionado
-  columns.forEach(column => {
-    const status = column.dataset.status;
-    if (status === columnName) {
-      column.classList.remove('hidden');
-    } else {
-      column.classList.add('hidden');
     }
   });
 }

@@ -45,6 +45,31 @@
             font-size: 12px;
         }
 
+        /* Added smooth page transitions and animations */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        main {
+            animation: fadeIn 400ms ease-out;
+        }
+        
+        .column {
+            animation: fadeIn 500ms ease-out;
+        }
+        
+        .card {
+            animation: fadeIn 300ms ease-out;
+        }
+        /* </CHANGE> */
+
         /* Header fixo */
         header {
             position: fixed;
@@ -77,7 +102,6 @@
             min-width: 200px;
             position: relative;
         }
-        /* Improved search input styling with focus effects and rounded corners */
         .search input {
             width: 100%;
             padding: 10px 16px 10px 40px;
@@ -95,7 +119,6 @@
         .search input::placeholder {
             color: var(--gray-500);
         }
-        /* Search icon pseudo-element */
         .search::before {
             content: "🔍";
             position: absolute;
@@ -106,7 +129,6 @@
             pointer-events: none;
             opacity: 0.6;
         }
-        /* </CHANGE> */
         .filter {
             display: flex;
             gap: 8px;
@@ -180,7 +202,6 @@
             min-height: calc(100vh - 80px);
         }
 
-        /* Abas - por padrão escondidas (desktop) */
         .tabs {
             grid-column: 1 / -1;
             display: none;
@@ -376,29 +397,39 @@
         .column[data-testid="column-in-progress"] h2 { color: var(--green-700); }
         .column[data-testid="column-done"] h2 { color: var(--green-700); }
 
-        /* Enhanced button styling with hover effects and shadows */
+        /* Enhanced "Adicionar" button with better gradient, shadow, and icon */
         .add-task {
-            padding: 10px 18px;
-            background: var(--green-700);
+            padding: 12px 24px;
+            background: linear-gradient(135deg, #2E7D32 0%, #1B5E20 100%);
             color: var(--white);
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             margin-bottom: 16px;
             align-self: flex-start;
-            transition: all 200ms ease;
-            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
+            transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        .add-task::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, transparent 100%);
+            opacity: 0;
+            transition: opacity 250ms ease;
         }
         .add-task:hover {
-            background: #256428;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+            background: linear-gradient(135deg, #1B5E20 0%, #0D4016 100%);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(46, 125, 50, 0.4);
         }
         .add-task:active {
-            transform: translateY(0);
-            box-shadow: 0 1px 2px rgba(46, 125, 50, 0.2);
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 3px 8px rgba(46, 125, 50, 0.25);
         }
         /* </CHANGE> */
         @media (max-width: 599px) {
@@ -426,16 +457,21 @@
             margin-bottom: 8px;
             box-shadow: 0 1px 4px var(--shadow);
             cursor: grab;
-            transition: all 150ms ease;
+            /* Enhanced transition for smooth expansion effect */
+            transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
             role: listitem;
             position: relative;
             display: flex;
             flex-direction: column;
             min-height: 210px;
             width: 100%;
+            z-index: 1;
         }
+        /* Stronger expansion effect on hover with increased scale and shadow */
         .card:hover {
-            box-shadow: 0 2px 8px var(--shadow);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+            transform: translateY(-6px) scale(1.04);
+            z-index: 10;
         }
         .card.dragging {
             opacity: 0.5;
@@ -464,14 +500,6 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
             margin-bottom: 8px;
-        }
-        @media (max-width: 599px) {
-            .card-title {
-                font-size: 14px;
-            }
-            .card-description {
-                font-size: 12px;
-            }
         }
         .card-tags {
             display: flex;
@@ -582,115 +610,45 @@
         .tag-input {
             display: flex;
             gap: 8px;
-            align-items: center;
+            align-items: center; /* Back to center for proper vertical alignment */
         }
         .tag-input input {
             flex: 1;
-        }
-        /* Improved checkbox styling for better visibility */
-        .modal-toggle {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            margin: 8px 0;
-        }
-        .modal-toggle input[type="checkbox"] {
-            width: 20px;
-            height: 20px;
-            cursor: pointer;
-            accent-color: var(--green-700);
-        }
-        /* </CHANGE> */
-        .modal-tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 6px;
-            margin-top: 6px;
-        }
-        .modal-tags .chip {
-            background: var(--gray-50);
-            color: var(--green-700);
-            border: 1px dashed var(--green-200);
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .modal-tags button {
-            background: none;
-            border: none;
-            color: var(--green-700);
-            cursor: pointer;
-            font-size: 12px;
-            margin-left: 4px;
-        }
-
-        .card-priority {
-            position: absolute;
-            top: 8px;
-            right: 8px;
-            font-size: 12px;
-            font-weight: 600;
-            padding: 2px 10px;
-            border-radius: 999px;
-            color: var(--white);
-            text-transform: uppercase;
-        }
-        @media (max-width: 599px) {
-            .card-priority {
-                font-size: 10px;
-                padding: 2px 6px;
-                top: 6px;
-                right: 6px;
-            }
-        }
-        .card-priority.priority-baixa { background: #81c784; }
-        .card-priority.priority-medio { background: #ffb74d; }
-        .card-priority.priority-alta { background: #ef5350; }
-        .card-priority.priority-critica { background: #c2185b; }
-
-        .card-menu {
-            position: absolute;
-            top: 8px;
-            right: 32px;
-            cursor: pointer;
-            font-size: 18px;
-        }
-        @media (max-width: 599px) {
-            .card-menu {
-                top: 6px;
-                right: 26px;
-                font-size: 16px;
-            }
-        }
-        .card-menu-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border: 1px solid var(--gray-500);
+            transition: all 200ms ease;
+            border: 2px solid #E0E0E0;
+            padding: 10px 12px;
             border-radius: 8px;
-            box-shadow: 0 4px 12px var(--shadow);
-            z-index: 50;
+            font-size: 14px;
+            height: 44px; /* Fixed height for consistent sizing */
+            box-sizing: border-box;
         }
-        .card-menu:hover .card-menu-dropdown {
-            display: block;
-        }
-        .card-menu-dropdown button {
-            display: block;
-            width: 100%;
-            padding: 8px 12px;
-            background: none;
+        .tag-input button {
+            padding: 0 18px; /* Removed vertical padding, using height instead */
+            height: 44px; /* Same fixed height as input */
+            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+            color: var(--white);
             border: none;
-            text-align: left;
+            border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 600;
+            transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 8px rgba(25, 118, 210, 0.25);
+            position: relative;
+            overflow: hidden;
+            white-space: nowrap;
+            flex-shrink: 0;
+            display: flex; /* Using flex to center text vertically */
+            align-items: center;
+            justify-content: center;
+            box-sizing: border-box;
         }
-        .card-menu-dropdown button:hover {
-            background: var(--gray-50);
+        .tag-input button:hover {
+            background: linear-gradient(135deg, #0D47A1 0%, #0A3A7A 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(25, 118, 210, 0.35);
         }
-
+        /* </CHANGE> */
         .modal {
             display: none;
             position: fixed;
@@ -788,9 +746,75 @@
             background: var(--green-700);
             color: var(--white);
         }
+        .modal-save:hover {
+            background: #1B5E20;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
+            transition: all 200ms ease;
+        }
         .modal-cancel {
             background: var(--gray-50);
             color: var(--gray-500);
+        }
+        .modal-cancel:hover {
+            background: #E0E0E0;
+            transition: all 200ms ease;
+        }
+        .modal input:hover, .modal textarea:hover, .modal select:hover {
+            border-color: var(--green-200);
+            transition: all 200ms ease;
+        }
+        .modal input:focus, .modal textarea:focus, .modal select:focus {
+            border-color: var(--green-700);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        .pill {
+            transition: all 200ms ease;
+        }
+        .pill:hover {
+            transform: scale(1.05);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+        }
+        .chip {
+            transition: all 200ms ease;
+        }
+        .chip:hover {
+            transform: scale(1.05);
+        }
+        .reset-demo:hover {
+            background: #1B5E20;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
+            transition: all 200ms ease;
+        }
+        .density-toggle button:hover {
+            background: #81C784;
+            transform: translateY(-1px);
+            box-shadow: 0 3px 8px rgba(46, 125, 50, 0.2);
+            transition: all 200ms ease;
+        }
+        .filter select:hover {
+            border-color: var(--green-700);
+            transition: all 200ms ease;
+        }
+        .tab:hover {
+            background: var(--green-200);
+            transform: translateY(-1px);
+            transition: all 200ms ease;
+        }
+        .modal-tags button:hover {
+            transform: scale(1.2);
+            transition: all 150ms ease;
+        }
+        .confirm-cancel:hover {
+            background: #E0E0E0;
+            transition: all 200ms ease;
+        }
+        .confirm-confirm:hover {
+            background: #B71C1C;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 10px rgba(211, 47, 47, 0.3);
+            transition: all 200ms ease;
         }
         .modal-error {
             color: #D32F2F;
@@ -909,6 +933,121 @@
                 margin-bottom: 8px;
             }
         }
+
+        /* Enhanced card menu with better z-index and hover effects */
+        .card-menu {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            cursor: pointer;
+            padding: 4px 8px;
+            font-size: 18px;
+            background: transparent;
+            border: none;
+            color: var(--gray-500);
+            z-index: 60;
+            pointer-events: auto;
+            transition: all 200ms ease;
+        }
+        .card-menu:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
+            color: var(--green-700);
+            transform: scale(1.15);
+        }
+        .card-menu-dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background: var(--white);
+            border: 1px solid var(--gray-500);
+            border-radius: 8px;
+            box-shadow: 0 4px 12px var(--shadow);
+            z-index: 150;
+            min-width: 120px;
+            pointer-events: auto;
+        }
+        .card-menu-dropdown.show {
+            display: block;
+        }
+        .card-menu-dropdown button {
+            display: block;
+            width: 100%;
+            padding: 8px 12px;
+            border: none;
+            background: transparent;
+            text-align: left;
+            cursor: pointer;
+            font-size: 14px;
+            color: var(--green-700);
+            pointer-events: auto;
+            transition: all 150ms ease;
+        }
+        .card-menu-dropdown button:hover {
+            background: var(--gray-50);
+            transform: translateX(3px);
+        }
+        .card-menu-dropdown button:first-child {
+            border-radius: 8px 8px 0 0;
+        }
+        .card-menu-dropdown button:last-child {
+            border-radius: 0 0 8px 8px;
+            color: #D32F2F;
+        }
+        /* </CHANGE> */
+
+        /* Replaced card menu styles with delete button styles */
+        .card-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(211, 47, 47, 0.1);
+            border: none;
+            color: #D32F2F;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            pointer-events: auto;
+            transition: all 200ms ease;
+            opacity: 0.7;
+        }
+        .card-delete-btn:hover {
+            background: #D32F2F;
+            color: white;
+            transform: scale(1.15);
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+        }
+        .card-delete-btn:active {
+            transform: scale(1.05);
+        }
+        /* </CHANGE> */
+
+        /* Added better spacing and alignment for the archived checkbox section */
+        .modal-toggle {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .modal-toggle input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+        }
+        .modal-toggle label {
+            margin: 0;
+            font-weight: 500;
+        }
+        /* </CHANGE> */
     </style>
 </head>
 <body>
@@ -957,7 +1096,6 @@ Como testar:
         </div>
     </header>
     <main>
-        <!-- Abas: só aparecem no mobile (< 600px) -->
         <div class="tabs">
             <button class="tab active" data-column="all">Todos</button>
             <button class="tab" data-column="todo">A Fazer</button>
@@ -1063,6 +1201,8 @@ Como testar:
     </div>
 
     <div class="toast" id="toast"></div>
+    <!-- Enhanced click handler with preventDefault for better menu interaction -->
+    <!-- Removed inline script and moved logic to app.js for better event handling -->
     <script type="module" src="js/app.js"></script>
 </body>
 </html>

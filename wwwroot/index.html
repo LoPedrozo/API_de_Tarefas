@@ -610,39 +610,43 @@
         .tag-input {
             display: flex;
             gap: 8px;
-            align-items: center;
+            align-items: center; /* Back to center for proper vertical alignment */
         }
         .tag-input input {
             flex: 1;
             transition: all 200ms ease;
-            border: 1px solid #E0E0E0; /* reduced border width from 2px to 1px */
-            padding: 6px 10px; /* reduced padding from 10px 12px */
-            border-radius: 6px; /* reduced border radius from 8px */
-            font-size: 13px; /* reduced font size from 14px */
-            height: 32px; /* reduced height from 44px to 32px */
+            border: 2px solid #E0E0E0;
+            padding: 10px 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            height: 44px; /* Fixed height for consistent sizing */
             box-sizing: border-box;
         }
         .tag-input button {
-            padding: 0 12px; /* reduced horizontal padding from 18px to 12px */
-            height: 32px; /* reduced height from 44px to 32px */
-            background: var(--gray-500); /* changed to neutral gray from blue gradient */
+            padding: 0 18px; /* Removed vertical padding, using height instead */
+            height: 44px; /* Same fixed height as input */
+            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
             color: var(--white);
             border: none;
-            border-radius: 6px; /* reduced border radius from 8px */
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 12px; /* reduced font size from 14px to 12px */
-            font-weight: 500; /* reduced font weight from 600 to 500 */
-            transition: all 200ms ease; /* simplified transition */
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 3px 8px rgba(25, 118, 210, 0.25);
+            position: relative;
+            overflow: hidden;
             white-space: nowrap;
             flex-shrink: 0;
-            display: flex;
+            display: flex; /* Using flex to center text vertically */
             align-items: center;
             justify-content: center;
             box-sizing: border-box;
         }
         .tag-input button:hover {
-            background: #757575; /* simplified hover to darker gray */
-            transform: translateY(-1px); /* subtle lift effect */
+            background: linear-gradient(135deg, #0D47A1 0%, #0A3A7A 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(25, 118, 210, 0.35);
         }
         /* </CHANGE> */
         .modal {
@@ -933,47 +937,36 @@
         /* Enhanced card menu with better z-index and hover effects */
         .card-menu {
             position: absolute;
-            top: 4px;
-            right: 4px;
-            z-index: 100;
-            pointer-events: auto;
-        }
-        .card-menu-button {
-            padding: 8px 12px;
-            font-size: 20px;
-            background: rgba(255, 255, 255, 0.95);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            border-radius: 6px;
-            color: var(--gray-500);
+            top: 8px;
+            right: 8px;
             cursor: pointer;
+            padding: 4px 8px;
+            font-size: 18px;
+            background: transparent;
+            border: none;
+            color: var(--gray-500);
+            z-index: 60;
+            pointer-events: auto;
             transition: all 200ms ease;
-            line-height: 1;
-            min-width: 40px;
-            min-height: 36px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
-        .card-menu-button:hover {
-            background: var(--white);
+        .card-menu:hover {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 4px;
             color: var(--green-700);
-            transform: scale(1.1);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+            transform: scale(1.15);
         }
         .card-menu-dropdown {
             display: none;
             position: absolute;
             top: 100%;
             right: 0;
-            margin-top: 4px;
             background: var(--white);
             border: 1px solid var(--gray-500);
             border-radius: 8px;
             box-shadow: 0 4px 12px var(--shadow);
-            z-index: 200;
-            min-width: 140px;
+            z-index: 150;
+            min-width: 120px;
             pointer-events: auto;
-            overflow: hidden;
         }
         .card-menu-dropdown.show {
             display: block;
@@ -981,7 +974,7 @@
         .card-menu-dropdown button {
             display: block;
             width: 100%;
-            padding: 10px 14px;
+            padding: 8px 12px;
             border: none;
             background: transparent;
             text-align: left;
@@ -995,9 +988,47 @@
             background: var(--gray-50);
             transform: translateX(3px);
         }
+        .card-menu-dropdown button:first-child {
+            border-radius: 8px 8px 0 0;
+        }
         .card-menu-dropdown button:last-child {
+            border-radius: 0 0 8px 8px;
             color: #D32F2F;
-            border-top: 1px solid #f0f0f0;
+        }
+        /* </CHANGE> */
+
+        /* Replaced card menu styles with delete button styles */
+        .card-delete-btn {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: rgba(211, 47, 47, 0.1);
+            border: none;
+            color: #D32F2F;
+            font-size: 24px;
+            font-weight: 300;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 60;
+            pointer-events: auto;
+            transition: all 200ms ease;
+            opacity: 0.7;
+        }
+        .card-delete-btn:hover {
+            background: #D32F2F;
+            color: white;
+            transform: scale(1.15);
+            opacity: 1;
+            box-shadow: 0 2px 8px rgba(211, 47, 47, 0.3);
+        }
+        .card-delete-btn:active {
+            transform: scale(1.05);
         }
         /* </CHANGE> */
 
@@ -1015,6 +1046,57 @@
         .modal-toggle label {
             margin: 0;
             font-weight: 500;
+        }
+        /* </CHANGE> */
+
+        /* Added red X styling for tag delete button */
+        .modal-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .modal-tags .tag-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: var(--gray-50);
+            border: 1px solid var(--green-200);
+            border-radius: 999px;
+            font-size: 12px;
+            color: var(--green-700);
+        }
+        .modal-tags button {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: rgba(211, 47, 47, 0.1);
+            border: none;
+            color: #D32F2F;
+            font-size: 16px;
+            font-weight: 700;
+            line-height: 1;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0;
+            transition: all 200ms ease;
+            flex-shrink: 0;
+        }
+        .modal-tags button:hover {
+            background: #D32F2F;
+            color: white;
+            transform: scale(1.2);
+            box-shadow: 0 2px 6px rgba(211, 47, 47, 0.3);
+        }
+        .modal-tags button:active {
+            transform: scale(1.1);
+        }
+        .modal-tags button::before {
+            content: "×";
+            display: block;
         }
         /* </CHANGE> */
     </style>
@@ -1075,31 +1157,7 @@ Como testar:
         <div class="column" data-testid="column-todo" data-status="todo">
             <h2>A Fazer</h2>
             <button class="add-task" data-testid="add-task" aria-label="Adicionar nova tarefa">+ Nova Tarefa</button>
-            <div class="cards">
-                <div class="card">
-                    <div class="card-menu">
-                        <button class="card-menu-button">⋮</button>
-                        <div class="card-menu-dropdown">
-                            <button type="button">Editar</button>
-                            <button type="button">Excluir</button>
-                        </div>
-                    </div>
-                    <div class="card-title">Tarefa 1</div>
-                    <div class="card-description">Descrição da tarefa 1</div>
-                    <div class="card-tags">
-                        <div class="chip chip-color-verde">Setor 1</div>
-                        <div class="chip chip-color-amarelo">Prioridade Alta</div>
-                    </div>
-                    <div class="card-meta">
-                        <span><strong>Criada por:</strong> João</span>
-                        <span><strong>Data de criação:</strong> 01/01/2023</span>
-                    </div>
-                    <div class="card-footer">
-                        <div class="pill pill-status-todo">A Fazer</div>
-                        <div class="pill pill-priority-alta">Alta</div>
-                    </div>
-                </div>
-            </div>
+            <div class="cards"></div>
         </div>
         <div class="column" data-testid="column-in-progress" data-status="in-progress">
             <h2>Em Progresso</h2>
@@ -1167,7 +1225,7 @@ Como testar:
                     <label for="task-arquivada" style="margin:0;">Arquivada</label>
                 </div>
 
-                <label for="extra-tag-input">Tags adicionais</label> <!-- label remains for accessibility -->
+                <label for="extra-tag-input">Tags adicionais</label>
                 <div class="tag-input">
                     <input type="text" id="extra-tag-input" placeholder="Digite e pressione Enter">
                     <button type="button" id="extra-tag-add">Adicionar</button>

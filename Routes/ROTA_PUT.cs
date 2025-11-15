@@ -19,6 +19,7 @@ namespace TAREFASAPI.Routes
                 tarefaExistente.Prioridade = tarefaAtualizada.Prioridade;
                 tarefaExistente.Responsavel = tarefaAtualizada.Responsavel;
                 tarefaExistente.Tags = tarefaAtualizada.Tags ?? new List<string>();
+                tarefaExistente.Arquivada = tarefaAtualizada.Arquivada;
 
                 await db.SaveChangesAsync();
                 return Results.Ok(tarefaExistente);

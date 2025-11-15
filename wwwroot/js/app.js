@@ -566,7 +566,7 @@ function mapUiTaskToApi(task) {
     responsavel: task.responsavel || '',
     tags: task.tags,
     estimativaHoras: formatEstimateForApi(task.estimativaHoras),
-    arquivada: task.arquivada ? 'Arquivada' : 'Não arquivada'
+    arquivada: Boolean(task.arquivada)
   };
 }
 
@@ -689,7 +689,15 @@ function formatDateForDisplay(value) {
 
 function isArchived(value) {
   if (typeof value === 'boolean') return value;
-  return typeof value === 'string' && value.toLowerCase().includes('arquivada');
+  if (typeof value === 'number') return value !== 0;
+  if (value === null || value === undefined) return false;
+  const normalized = normalizeAlias(value);
+  if (!normalized) return false;
+  if (normalized === 'true' || normalized === '1') return true;
+  if (normalized === 'false' || normalized === '0') return false;
+  if (normalized.includes('nao')) return false;
+  if (normalized.includes('sim')) return true;
+  return normalized.includes('arquiv');
 }
 
 function getLabelDefinition(id) {

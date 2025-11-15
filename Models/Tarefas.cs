@@ -162,18 +162,9 @@ namespace TAREFASAPI.Models
 
 
         /// Indica se a tarefa está arquivada.
-        [JsonIgnore]
-        public bool Arquivada { get; set; }
-
-
-        /// Texto amigável para status de arquivamento.
-        [NotMapped]
         [JsonPropertyName("arquivada")]
-        public string ArquivadaDescricao
-        {
-            get => Arquivada ? "Arquivada" : "Não arquivada";
-            set => Arquivada = string.Equals(value, "Arquivada", StringComparison.OrdinalIgnoreCase);
-        }
+        [JsonConverter(typeof(FlexibleBoolJsonConverter))]
+        public bool Arquivada { get; set; }
     }
     
 
@@ -184,5 +175,46 @@ namespace TAREFASAPI.Models
         Medio,
         Alta,
         Critica
+    }
+
+    /// <summary>
+    /// Converte valores booleanos vindos como bool, número ou textos amigáveis.
+    /// </summary>
+    internal sealed class FlexibleBoolJsonConverter : JsonConverter<bool>
+    {
+        public override bool Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            return reader.TokenType switch
+            {
+                JsonTokenType.True => true,
+                JsonTokenType.False => false,
+                JsonTokenType.Number => reader.TryGetInt64(out var number) && number != 0,
+                JsonTokenType.String => ParseString(reader.GetString()),
+                _ => false
+            };
+        }
+
+        public override void Write(Utf8JsonWriter writer, bool value, JsonSerializerOptions options)
+        {
+            writer.WriteBooleanValue(value);
+        }
+
+        private static bool ParseString(string? value)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return false;
+
+            var normalized = value.Trim().ToLowerInvariant();
+
+            if (normalized is "true" or "1")
+                return true;
+            if (normalized is "false" or "0")
+                return false;
+
+            if (normalized.Contains("nao") || normalized.Contains("não"))
+                return false;
+
+            return normalized.Contains("arquiv") || normalized.Contains("sim");
+        }
     }
 }

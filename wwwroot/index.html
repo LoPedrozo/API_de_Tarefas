@@ -67,24 +67,46 @@
             display: flex;
             align-items: center;
         }
-        /* Added logo image styling */
         .logo img {
-            height: 56px; /* Increased from 32px to 56px for better visibility */
+            height: 56px;
             width: auto;
             display: block;
         }
-        /* </CHANGE> */
         .search {
             flex: 1;
             min-width: 200px;
+            position: relative;
         }
+        /* Improved search input styling with focus effects and rounded corners */
         .search input {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--gray-500);
-            border-radius: 8px;
+            padding: 10px 16px 10px 40px;
+            border: 2px solid #E0E0E0;
+            border-radius: 24px;
             font-size: 14px;
+            transition: all 200ms ease;
+            background: var(--gray-50);
         }
+        .search input:focus {
+            border-color: var(--green-700);
+            background: var(--white);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+        }
+        .search input::placeholder {
+            color: var(--gray-500);
+        }
+        /* Search icon pseudo-element */
+        .search::before {
+            content: "🔍";
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 16px;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+        /* </CHANGE> */
         .filter {
             display: flex;
             gap: 8px;
@@ -196,14 +218,18 @@
                 font-size: 20px;
             }
             .logo img {
-                height: 48px; /* Increased from 28px to 48px for tablets */
+                height: 48px;
             }
             .search {
                 min-width: 150px;
             }
             .search input {
-                padding: 6px 10px;
+                padding: 8px 12px 8px 36px;
                 font-size: 12px;
+            }
+            .search::before {
+                left: 12px;
+                font-size: 14px;
             }
             .filter {
                 gap: 4px;
@@ -240,14 +266,19 @@
                 margin-bottom: 4px;
             }
             .logo img {
-                height: 40px; /* Increased from 24px to 40px for mobile */
+                height: 40px;
             }
             .search {
                 min-width: calc(100% - 60px);
             }
             .search input {
-                padding: 6px 10px;
+                padding: 8px 12px 8px 36px;
                 font-size: 12px;
+                border-radius: 20px;
+            }
+            .search::before {
+                left: 12px;
+                font-size: 14px;
             }
             .filter {
                 display: none;
@@ -345,17 +376,31 @@
         .column[data-testid="column-in-progress"] h2 { color: var(--green-700); }
         .column[data-testid="column-done"] h2 { color: var(--green-700); }
 
+        /* Enhanced button styling with hover effects and shadows */
         .add-task {
-            padding: 8px 12px;
-            background: var(--green-200);
-            color: var(--green-700);
+            padding: 10px 18px;
+            background: var(--green-700);
+            color: var(--white);
             border: none;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
+            font-weight: 500;
             margin-bottom: 16px;
             align-self: flex-start;
+            transition: all 200ms ease;
+            box-shadow: 0 2px 4px rgba(46, 125, 50, 0.2);
         }
+        .add-task:hover {
+            background: #256428;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(46, 125, 50, 0.3);
+        }
+        .add-task:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(46, 125, 50, 0.2);
+        }
+        /* </CHANGE> */
         @media (max-width: 599px) {
             .add-task {
                 padding: 8px 10px;
@@ -542,12 +587,21 @@
         .tag-input input {
             flex: 1;
         }
+        /* Improved checkbox styling for better visibility */
         .modal-toggle {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
             font-weight: 500;
+            margin: 8px 0;
         }
+        .modal-toggle input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--green-700);
+        }
+        /* </CHANGE> */
         .modal-tags {
             display: flex;
             flex-wrap: wrap;
@@ -859,11 +913,9 @@
 </head>
 <body>
     <header>
-        <!-- Fixed logo path: changed from .jpg to .png -->
         <div class="logo"> 
             <img src="/img/logo_o_grillo.jpg" alt="Logo o grillo">
         </div>
-        <!-- </CHANGE> -->
         <div class="search">
             <input type="text" placeholder="Buscar tarefas..." data-testid="search">
         </div>

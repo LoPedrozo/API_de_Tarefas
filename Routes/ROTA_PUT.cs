@@ -20,6 +20,8 @@ namespace TAREFASAPI.Routes
                 tarefaExistente.Responsavel = tarefaAtualizada.Responsavel;
                 tarefaExistente.Tags = tarefaAtualizada.Tags ?? new List<string>();
                 tarefaExistente.Arquivada = tarefaAtualizada.Arquivada;
+                tarefaExistente.DataVencimento = tarefaAtualizada.DataVencimento;
+                tarefaExistente.DataConclusao = tarefaAtualizada.DataConclusao;
 
                 await db.SaveChangesAsync();
                 return Results.Ok(tarefaExistente);

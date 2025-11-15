@@ -25,7 +25,7 @@ namespace TAREFASAPI.Models
 
         /// Data e hora em que a tarefa foi criada (UTC).
         [JsonIgnore]
-        public DateTime DataCriacao { get; set; } = DateTime.UtcNow;
+        public DateTime DataCriacao { get; set; } = DateTime.SpecifyKind(DateTime.Now.Date, DateTimeKind.Unspecified);
 
 
         /// Data formatada de criação, exibida sem horário.
@@ -36,8 +36,14 @@ namespace TAREFASAPI.Models
             get => DataCriacao.ToString("yyyy-MM-dd");
             set
             {
-                if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed))
-                    DataCriacao = parsed;
+                if (DateTime.TryParseExact(value,
+                        "yyyy-MM-dd",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out var parsed))
+                {
+                    DataCriacao = DateTime.SpecifyKind(parsed, DateTimeKind.Unspecified);
+                }
             }
         }
 
@@ -55,9 +61,13 @@ namespace TAREFASAPI.Models
             get => DataVencimento.HasValue ? DataVencimento.Value.ToString("yyyy-MM-dd") : "Sem data de vencimento";
             set
             {
-                if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed))
+                if (DateTime.TryParseExact(value,
+                        "yyyy-MM-dd",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out var parsed))
                 {
-                    DataVencimento = parsed;
+                    DataVencimento = DateTime.SpecifyKind(parsed, DateTimeKind.Unspecified);
                     return;
                 }
 
@@ -79,9 +89,13 @@ namespace TAREFASAPI.Models
             get => DataConclusao.HasValue ? DataConclusao.Value.ToString("yyyy-MM-dd") : "Sem data de conclusão";
             set
             {
-                if (DateTime.TryParse(value, CultureInfo.InvariantCulture, DateTimeStyles.AssumeUniversal, out var parsed))
+                if (DateTime.TryParseExact(value,
+                        "yyyy-MM-dd",
+                        CultureInfo.InvariantCulture,
+                        DateTimeStyles.None,
+                        out var parsed))
                 {
-                    DataConclusao = parsed;
+                    DataConclusao = DateTime.SpecifyKind(parsed, DateTimeKind.Unspecified);
                     return;
                 }
 

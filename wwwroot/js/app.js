@@ -680,10 +680,21 @@ function normalizeOptionalDate(value) {
   return normalizeDateValue(value);
 }
 
+function parseLocalDate(value) {
+  if (!value) return null;
+  const [datePart] = value.toString().split('T');
+  const parts = datePart.split('-').map(Number);
+  if (parts.length !== 3) return null;
+  const [year, month, day] = parts;
+  if ([year, month, day].some(num => Number.isNaN(num))) return null;
+  const date = new Date(year, month - 1, day);
+  return Number.isNaN(date.getTime()) ? null : date;
+}
+
 function formatDateForDisplay(value) {
   if (!value) return 'Sem data';
-  const date = new Date(value);
-  if (Number.isNaN(date.getTime())) return value;
+  const date = parseLocalDate(value);
+  if (!date) return value;
   return date.toLocaleDateString('pt-BR');
 }
 

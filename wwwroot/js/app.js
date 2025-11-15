@@ -67,6 +67,9 @@ const modalState = {
 const elements = {};
 let tasks = [];
 let currentTaskId = null;
+const confirmState = {
+  resolver: null
+};
 
 document.addEventListener('DOMContentLoaded', () => {
   cacheDom();
@@ -105,6 +108,10 @@ function cacheDom() {
   elements.resetButton = document.querySelector('[data-testid="reset-demo"]');
   elements.modalCancelButton = document.querySelector('[data-testid="modal-cancel"]');
   elements.tabs = document.querySelectorAll('.tab');
+  elements.confirmOverlay = document.getElementById('confirm-overlay');
+  elements.confirmMessage = document.getElementById('confirm-message');
+  elements.confirmConfirmButton = document.getElementById('confirm-confirm');
+  elements.confirmCancelButton = document.getElementById('confirm-cancel');
 }
 
 function setupLabelSelectors() {
@@ -169,6 +176,25 @@ function bindEvents() {
     if (event.key === 'Enter') {
       event.preventDefault();
       addExtraTag(elements.extraTagInput.value);
+    }
+  });
+
+  if (elements.confirmCancelButton) {
+    elements.confirmCancelButton.addEventListener('click', () => resolveConfirmDialog(false));
+  }
+  if (elements.confirmConfirmButton) {
+    elements.confirmConfirmButton.addEventListener('click', () => resolveConfirmDialog(true));
+  }
+  if (elements.confirmOverlay) {
+    elements.confirmOverlay.addEventListener('click', event => {
+      if (event.target === elements.confirmOverlay) {
+        resolveConfirmDialog(false);
+      }
+    });
+  }
+  document.addEventListener('keydown', event => {
+    if (event.key === 'Escape' && confirmState.resolver) {
+      resolveConfirmDialog(false);
     }
   });
 }
@@ -446,7 +472,7 @@ async function persistTask(task) {
 }
 
 async function deleteTask(id, title) {
-  const confirmed = confirm(`Remover a tarefa "${title}"?`);
+  const confirmed = await openConfirmDialog(`Remover a tarefa "${title}"?`);
   if (!confirmed) return;
   try {
     const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
@@ -746,4 +772,26 @@ function normalizeAlias(value) {
     .normalize('NFD')
     .replace(/[^a-z0-9]/gi, '')
     .toLowerCase();
+}
+
+function openConfirmDialog(message) {
+  if (!elements.confirmOverlay) {
+    return Promise.resolve(window.confirm(message));
+  }
+  elements.confirmMessage.textContent = message;
+  elements.confirmOverlay.classList.add('show');
+  return new Promise(resolve => {
+    confirmState.resolver = resolve;
+  });
+}
+
+function resolveConfirmDialog(result) {
+  if (elements.confirmOverlay) {
+    elements.confirmOverlay.classList.remove('show');
+  }
+  if (confirmState.resolver) {
+    const resolver = confirmState.resolver;
+    confirmState.resolver = null;
+    resolver(result);
+  }
 }

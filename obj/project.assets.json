@@ -2291,19 +2291,19 @@
     ]
   },
   "packageFolders": {
-    "/Users/pedrozo/.nuget/packages/": {}
+    "C:\\Users\\andre\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/pedrozo/TAREFASAPI/TAREFASAPI.csproj",
+      "projectUniqueName": "C:\\Users\\andre\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
       "projectName": "TAREFASAPI",
-      "projectPath": "/Users/pedrozo/TAREFASAPI/TAREFASAPI.csproj",
-      "packagesPath": "/Users/pedrozo/.nuget/packages/",
-      "outputPath": "/Users/pedrozo/TAREFASAPI/obj/",
+      "projectPath": "C:\\Users\\andre\\Documents\\GitHub\\API_de_Tarefas\\TAREFASAPI.csproj",
+      "packagesPath": "C:\\Users\\andre\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\andre\\Documents\\GitHub\\API_de_Tarefas\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/pedrozo/.nuget/NuGet/NuGet.Config"
+        "C:\\Users\\andre\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -2375,7 +2375,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.410/RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.410\\RuntimeIdentifierGraph.json"
       }
     }
   }

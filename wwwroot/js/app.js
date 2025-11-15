@@ -1,29 +1,29 @@
 const LABEL_MAP = {
   verde: {
     id: 'verde',
-    name: 'Verde',
+    name: 'Vendas',
     categoria: 'Vendas',
     color: '#28a745',
     textColor: '#ffffff',
-    token: 'Verde',
+    token: 'Vendas',
     aliases: ['verde', 'verdes', 'vendas', 'vendass', 'tag1']
   },
   amarelo: {
     id: 'amarelo',
-    name: 'Amarelo',
+    name: 'Marketing',
     categoria: 'Marketing',
     color: '#ffc107',
     textColor: '#2b2104',
-    token: 'Amarelo',
+    token: 'Marketing',
     aliases: ['amarelo', 'amarelos', 'marketing', 'tag2']
   },
   cinza: {
     id: 'cinza',
-    name: 'Cinza',
+    name: 'Operações',
     categoria: 'Operações',
     color: '#6c757d',
     textColor: '#ffffff',
-    token: 'Cinza',
+    token: 'Operações',
     aliases: ['cinza', 'cinzas', 'operacoes', 'operações', 'operacao', 'tag3']
   }
 };

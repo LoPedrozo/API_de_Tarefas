@@ -497,7 +497,7 @@
             margin-bottom: 8px;
             box-shadow: 0 1px 4px var(--shadow);
             cursor: pointer;
-            transition: transform 160ms ease, box-shadow 160ms ease;
+            transition: transform 220ms ease, box-shadow 220ms ease, opacity 260ms ease;
             role: listitem;
             position: relative;
             display: flex;
@@ -516,6 +516,12 @@
             opacity: 0.5;
             transform: rotate(5deg);
             cursor: grabbing;
+        }
+        .card.removing {
+            pointer-events: none;
+            opacity: 0;
+            transform: scale(0.88);
+            transition: transform 350ms ease, opacity 350ms ease;
         }
         @media (max-width: 599px) {
             .card {

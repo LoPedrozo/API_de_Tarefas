@@ -513,9 +513,16 @@ async function persistTask(task) {
 async function deleteTask(id, title) {
   const confirmed = await openConfirmDialog(`Remover a tarefa "${title}"?`);
   if (!confirmed) return;
+  const cardElement = document.querySelector(`.card[data-id="${id}"]`);
+  if (cardElement) {
+    cardElement.classList.add('removing');
+  }
   try {
     const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
     if (!response.ok) throw new Error('Erro ao excluir');
+    if (cardElement) {
+      await new Promise(resolve => setTimeout(resolve, 380));
+    }
     tasks = tasks.filter(task => task.id !== id);
     renderColumns();
     showToast('Tarefa excluída com sucesso.', 'danger');

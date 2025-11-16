@@ -240,7 +240,7 @@ async function loadTasks(showFeedback = false) {
     }
   } catch (error) {
     console.error(error);
-    showToast('Não foi possível carregar as tarefas.', true);
+    showToast('Não foi possível carregar as tarefas.', 'error');
   }
 }
 
@@ -410,6 +410,7 @@ function closeModal() {
 
 async function handleSubmit(event) {
   event.preventDefault();
+  const isEditing = Boolean(currentTaskId);
   const title = elements.titleInput.value.trim();
   if (!title) {
     elements.titleError.textContent = 'O título é obrigatório.';
@@ -447,10 +448,10 @@ async function handleSubmit(event) {
     await persistTask(taskPayload);
     closeModal();
     await loadTasks();
-    showToast(currentTaskId ? 'Tarefa atualizada.' : 'Tarefa criada.');
+    showToast(isEditing ? 'Tarefa editada com sucesso.' : 'Tarefa criada com sucesso.');
   } catch (error) {
     console.error(error);
-    showToast('Não foi possível salvar a tarefa.', true);
+    showToast('Não foi possível salvar a tarefa.', 'error');
   }
 }
 
@@ -476,10 +477,10 @@ async function deleteTask(id, title) {
     if (!response.ok) throw new Error('Erro ao excluir');
     tasks = tasks.filter(task => task.id !== id);
     renderColumns();
-    showToast('Tarefa excluída.');
+    showToast('Tarefa excluída com sucesso.', 'danger');
   } catch (error) {
     console.error(error);
-    showToast('Não foi possível excluir.', true);
+    showToast('Não foi possível excluir.', 'error');
   }
 }
 
@@ -745,10 +746,15 @@ function getTodayDateString() {
   return now.toISOString().split('T')[0];
 }
 
-function showToast(message, isError = false) {
+function showToast(message, type = 'success') {
   if (!elements.toast) return;
   elements.toast.textContent = message;
-  elements.toast.classList.toggle('error', isError);
+  elements.toast.classList.remove('error', 'danger');
+  if (type === 'error') {
+    elements.toast.classList.add('error');
+  } else if (type === 'danger') {
+    elements.toast.classList.add('danger');
+  }
   elements.toast.classList.add('show');
   setTimeout(() => elements.toast.classList.remove('show'), 3200);
 }

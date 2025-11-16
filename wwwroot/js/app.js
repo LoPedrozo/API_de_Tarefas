@@ -28,6 +28,24 @@ const LABEL_MAP = {
   }
 };
 
+if ('scrollRestoration' in window.history) {
+  window.history.scrollRestoration = 'manual';
+}
+
+function resetScrollPosition() {
+  window.scrollTo(0, 0);
+}
+
+window.addEventListener('load', () => {
+  requestAnimationFrame(resetScrollPosition);
+});
+
+window.addEventListener('pageshow', event => {
+  if (event.persisted) {
+    requestAnimationFrame(resetScrollPosition);
+  }
+});
+
 const LABEL_ORDER = Object.keys(LABEL_MAP);
 const DEFAULT_LABEL_ID = LABEL_ORDER[0];
 const BLOCKED_TAGS = new Set(['string', 'inicial']);
@@ -56,8 +74,7 @@ const API_URL = `${window.location.origin}/api/tarefas`;
 const filterState = {
   searchTerm: '',
   labelId: '',
-  priority: '',
-  status: ''
+  priority: ''
 };
 
 const modalState = {
@@ -79,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
   switchTab('all');
   loadTasks();
 });
+
 
 function cacheDom() {
   elements.modal = document.getElementById('task-modal');
@@ -103,9 +121,6 @@ function cacheDom() {
   elements.searchInput = document.querySelector('[data-testid="search"]');
   elements.labelFilter = document.querySelector('[data-testid="tag-filter"]');
   elements.priorityFilter = document.querySelector('[data-testid="priority-filter"]');
-  elements.statusFilter = document.querySelector('[data-testid="status-filter"]');
-  elements.densityButton = document.querySelector('[data-testid="density-toggle"]');
-  elements.resetButton = document.querySelector('[data-testid="reset-demo"]');
   elements.modalCancelButton = document.querySelector('[data-testid="modal-cancel"]');
   elements.tabs = document.querySelectorAll('.tab');
   elements.confirmOverlay = document.getElementById('confirm-overlay');
@@ -156,20 +171,6 @@ function bindEvents() {
     filterState.priority = event.target.value;
     renderColumns();
   });
-
-  elements.statusFilter.addEventListener('change', event => {
-    filterState.status = event.target.value;
-    renderColumns();
-  });
-
-  elements.densityButton.addEventListener('click', () => {
-    document.body.classList.toggle('compact');
-    elements.densityButton.textContent = document.body.classList.contains('compact')
-      ? 'Densidade: Compacta'
-      : 'Densidade: Padrão';
-  });
-
-  elements.resetButton.addEventListener('click', () => loadTasks(true));
 
   elements.extraTagAddButton.addEventListener('click', () => addExtraTag(elements.extraTagInput.value));
   elements.extraTagInput.addEventListener('keydown', event => {
@@ -366,9 +367,8 @@ function shouldIncludeTask(task, filters) {
 
   const matchesLabel = !filters.labelId || task.labelId === filters.labelId;
   const matchesPriority = !filters.priority || task.priority === filters.priority;
-  const matchesStatus = !filters.status || task.status === filters.status;
 
-  return matchesSearch && matchesLabel && matchesPriority && matchesStatus;
+  return matchesSearch && matchesLabel && matchesPriority;
 }
 
 function openModal(task = null, statusHint = 'todo') {

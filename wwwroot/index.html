@@ -76,37 +76,41 @@
             left: 0;
             right: 0;
             background: var(--white);
-            padding: 16px;
+            padding: 18px 24px;
             box-shadow: 0 2px 8px var(--shadow);
             display: flex;
             align-items: center;
-            gap: 16px;
+            gap: 12px;
             z-index: 100;
             flex-wrap: wrap;
         }
         .logo {
-            font-size: 24px;
+            font-size: 30px;
             font-weight: 600;
             color: var(--green-700);
             display: flex;
             align-items: center;
+            flex: 0 0 auto;
         }
         .logo img {
-            height: 56px;
+            height: 76px;
             width: auto;
             display: block;
         }
         .search {
-            flex: 1;
-            min-width: 200px;
+            flex: 1 1 520px;
+            min-width: 280px;
+            max-width: none;
             position: relative;
+            margin-left: 0;
+            margin-right: 0;
         }
         .search input {
             width: 100%;
-            padding: 10px 16px 10px 40px;
+            padding: 12px 18px 12px 46px;
             border: 2px solid #E0E0E0;
-            border-radius: 24px;
-            font-size: 14px;
+            border-radius: 28px;
+            font-size: 15px;
             transition: all 200ms ease;
             background: var(--gray-50);
         }
@@ -130,47 +134,34 @@
         }
         .filter {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             align-items: center;
+            flex: 0 0 auto;
         }
         .filter select {
             padding: 8px 12px;
             border: 1px solid var(--gray-500);
             border-radius: 8px;
             font-size: 14px;
-        }
-        .density-toggle {
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-        .density-toggle button {
-            padding: 8px 12px;
-            background: var(--green-200);
-            color: var(--green-700);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-        }
-        .reset-demo {
-            padding: 8px 12px;
-            background: var(--green-700);
-            color: var(--white);
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
+            min-width: 130px;
+            max-width: 160px;
         }
         .help {
             position: relative;
+            flex: 0 0 auto;
         }
         .help button {
-            padding: 8px;
+            width: 40px;
+            height: 40px;
+            padding: 0;
             background: var(--gray-50);
             border: 1px solid var(--gray-500);
-            border-radius: 8px;
+            border-radius: 12px;
             cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
         .help-tooltip {
             display: none;
@@ -180,19 +171,19 @@
             background: var(--white);
             border: 1px solid var(--gray-500);
             border-radius: 8px;
-            padding: 12px;
+            padding: 10px;
             box-shadow: 0 4px 12px var(--shadow);
-            font-size: 12px;
+            font-size: 11px;
             white-space: pre-line;
             z-index: 200;
-            max-width: 260px;
+            max-width: 220px;
         }
         .help:hover .help-tooltip {
             display: block;
         }
 
         main {
-            margin-top: 80px;
+            margin-top: 110px;
             padding: 16px;
             display: grid;
             grid-template-columns: 1fr 1fr 1fr;
@@ -230,28 +221,25 @@
 
         @media (max-width: 768px) {
             header {
-                padding: 12px;
-                gap: 8px;
+                padding: 14px;
+                gap: 10px;
             }
             .logo {
-                font-size: 20px;
+                font-size: 22px;
             }
             .logo img {
-                height: 48px;
-            }
-            .search {
-                min-width: 150px;
+                height: 54px;
             }
             .search input {
-                padding: 8px 12px 8px 36px;
-                font-size: 12px;
+                padding: 10px 14px 10px 38px;
+                font-size: 13px;
             }
             .search::before {
-                left: 12px;
+                left: 16px;
                 font-size: 14px;
             }
             .filter {
-                gap: 4px;
+                gap: 6px;
             }
             .filter label {
                 display: none;
@@ -259,15 +247,10 @@
             .filter select {
                 padding: 6px 10px;
                 font-size: 12px;
-            }
-            .density-toggle button,
-            .reset-demo,
-            .help button {
-                padding: 6px 10px;
-                font-size: 12px;
+                min-width: 130px;
             }
             main {
-                margin-top: 70px;
+                margin-top: 95px;
                 padding: 12px;
                 gap: 12px;
             }
@@ -276,7 +259,7 @@
         @media (max-width: 599px) {
             header {
                 padding: 10px;
-                gap: 6px;
+                gap: 8px;
                 justify-content: flex-start;
             }
             .logo {
@@ -285,7 +268,7 @@
                 margin-bottom: 4px;
             }
             .logo img {
-                height: 40px;
+                height: 44px;
             }
             .search {
                 min-width: calc(100% - 60px);
@@ -302,20 +285,10 @@
             .filter {
                 display: none;
             }
-            .density-toggle {
-                display: none;
-            }
-            .reset-demo {
-                padding: 6px 10px;
-                font-size: 12px;
-                min-width: auto;
-            }
-            .help {
-                min-width: auto;
-            }
             .help button {
-                padding: 6px 8px;
-                font-size: 12px;
+                width: 36px;
+                height: 36px;
+                font-size: 14px;
             }
             .help-tooltip {
                 left: auto;
@@ -325,7 +298,7 @@
                 max-width: 200px;
             }
             main {
-                margin-top: 110px;
+                margin-top: 130px;
                 grid-template-columns: 1fr;
                 padding: 10px 12px;
                 gap: 14px;
@@ -891,18 +864,6 @@
         .chip:hover {
             transform: scale(1.05);
         }
-        .reset-demo:hover {
-            background: #1B5E20;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 10px rgba(46, 125, 50, 0.3);
-            transition: all 200ms ease;
-        }
-        .density-toggle button:hover {
-            background: #81C784;
-            transform: translateY(-1px);
-            box-shadow: 0 3px 8px rgba(46, 125, 50, 0.2);
-            transition: all 200ms ease;
-        }
         .filter select:hover {
             border-color: var(--green-700);
             transition: all 200ms ease;
@@ -1069,27 +1030,15 @@
                 <option value="alta">Alta</option>
                 <option value="critica">Crítica</option>
             </select>
-            <label for="status-filter">Status:</label>
-            <select id="status-filter" data-testid="status-filter">
-                <option value="">Todos</option>
-                <option value="todo">A Fazer</option>
-                <option value="in-progress">Em Progresso</option>
-                <option value="done">Concluído</option>
-            </select>
         </div>
-        <div class="density-toggle">
-            <button data-testid="density-toggle">Densidade: Padrão</button>
-        </div>
-        <button class="reset-demo" data-testid="reset-demo">Recarregar dados</button>
         <div class="help">
             <button aria-label="Ajuda rápida">?</button>
             <div class="help-tooltip">
 Como testar:
-- Use o campo de busca e os filtros para localizar tarefas.
+- Use o campo de busca e os filtros para localizar tarefas por setor/prioridade.
 - Clique em + Nova tarefa para criar em qualquer coluna.
 - Clique em qualquer card para editar os detalhes.
 - Use o ícone de lixeira no canto do card para excluir (com confirmação).
-- "Recarregar dados" sincroniza novamente com a API.
 - Confira a responsividade redimensionando a janela.
             </div>
         </div>
@@ -1201,6 +1150,6 @@ Como testar:
 
     <div class="toast" id="toast"></div>
     <!-- Lógica de interação dos cards e formulários -->
-    <script type="module" src="js/app.js?v=20241117e"></script>
+    <script type="module" src="js/app.js?v=20241117f"></script>
 </body>
 </html>

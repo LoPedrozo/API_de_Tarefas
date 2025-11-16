@@ -351,15 +351,6 @@
             .card {
                 pointer-events: auto;
             }
-            .card-menu {
-                pointer-events: auto;
-            }
-            .card-menu-dropdown {
-                pointer-events: auto;
-            }
-            .card-menu-dropdown button {
-                pointer-events: auto;
-            }
         }
 
         .column {
@@ -471,6 +462,7 @@
             outline: none;
             border: none;
             background: transparent;
+            padding-right: 40px;
         }
         .card-description {
             font-size: 14px;
@@ -598,7 +590,7 @@
         .tag-input {
             display: flex;
             gap: 8px;
-            align-items: center;
+            align-items: stretch;
         }
         .tag-input input {
             flex: 1;
@@ -607,22 +599,27 @@
             padding: 10px 12px;
             border-radius: 8px;
             font-size: 14px;
-            height: 44px; /* Fixed height for consistent sizing */
+            height: 48px;
             box-sizing: border-box;
         }
         /* Neutral styling for tag "Adicionar" button */
         .tag-input button {
-            padding: 10px 20px;
+            padding: 0 24px;
             background: var(--gray-50);
             color: var(--green-700);
-            border: 1px solid #E0E0E0;
+            border: 2px solid #E0E0E0;
             border-radius: 8px;
             cursor: pointer;
             font-size: 14px;
-            font-weight: 500;
+            font-weight: 600;
             transition: all 200ms ease;
             white-space: nowrap;
             box-sizing: border-box;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            line-height: 1;
         }
         .tag-input button:hover {
             background: #E8E8E8;
@@ -632,15 +629,23 @@
         .modal-toggle {
             display: flex;
             align-items: center;
-            gap: 12px;
-            font-weight: 500;
-            margin: 8px 0;
+            gap: 10px;
+            margin: 4px 0 12px;
         }
         .modal-toggle input[type="checkbox"] {
             width: 20px;
             height: 20px;
             cursor: pointer;
             accent-color: var(--green-700);
+            margin: 0;
+            flex-shrink: 0;
+        }
+        .modal-toggle label {
+            margin: 0;
+            line-height: 1;
+            font-weight: 500;
+            cursor: pointer;
+            color: var(--green-700);
         }
         
         /* Red X button for deleting tags */
@@ -690,7 +695,7 @@
         .card-priority {
             position: absolute;
             top: 8px;
-            right: 8px;
+            right: 52px;
             font-size: 12px;
             font-weight: 600;
             padding: 2px 10px;
@@ -703,7 +708,7 @@
                 font-size: 10px;
                 padding: 2px 6px;
                 top: 6px;
-                right: 6px;
+                right: 46px;
             }
         }
         .card-priority.priority-baixa { background: #81c784; }
@@ -711,78 +716,47 @@
         .card-priority.priority-alta { background: #ef5350; }
         .card-priority.priority-critica { background: #c2185b; }
 
-        .card-menu {
+        .card-delete-button {
             position: absolute;
             top: 8px;
-            right: 32px;
-            cursor: pointer;
-            font-size: 20px;
-            width: 28px;
-            height: 28px;
+            right: 8px;
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: transparent;
+            color: #E53935;
+            line-height: 1;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 6px;
-            transition: all 200ms ease;
-            color: var(--gray-500);
+            cursor: pointer;
+            transition: transform 150ms ease, color 150ms ease, background 150ms ease;
+            z-index: 2;
         }
-        .card-menu:hover {
-            background: rgba(46, 125, 50, 0.1);
-            color: var(--green-700);
+        .card-delete-button svg {
+            width: 22px;
+            height: 22px;
+            pointer-events: none;
+        }
+        .card-delete-button:hover {
+            color: #C62828;
+            background: rgba(229, 57, 53, 0.12);
+            border-radius: 8px;
+            transform: translateY(-1px);
+        }
+        .card-delete-button:focus-visible {
+            outline: 2px solid #C62828;
+            outline-offset: 2px;
+            border-radius: 8px;
         }
         @media (max-width: 599px) {
-            .card-menu {
+            .card-delete-button {
                 top: 6px;
-                right: 26px;
-                font-size: 18px;
-                width: 24px;
-                height: 24px;
+                right: 6px;
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
             }
-        }
-        .card-menu-dropdown {
-            display: none;
-            position: absolute;
-            top: 100%;
-            right: 0;
-            background: var(--white);
-            border: 1px solid #E0E0E0;
-            border-radius: 10px;
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            z-index: 50;
-            margin-top: 4px;
-            overflow: hidden;
-            min-width: 140px;
-        }
-        .card-menu:hover .card-menu-dropdown {
-            display: block;
-            animation: fadeIn 200ms ease-out;
-        }
-        .card-menu-dropdown button {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            width: 100%;
-            padding: 10px 14px;
-            background: none;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            font-size: 14px;
-            color: var(--green-700);
-            transition: all 150ms ease;
-            font-weight: 500;
-        }
-        .card-menu-dropdown button:hover {
-            background: var(--gray-50);
-        }
-        .card-menu-dropdown button:first-child {
-            border-bottom: 1px solid #F0F0F0;
-        }
-        .card-menu-dropdown button:last-child {
-            color: #D32F2F;
-        }
-        .card-menu-dropdown button:last-child:hover {
-            background: #FFEBEE;
         }
 
         .modal {
@@ -1110,7 +1084,8 @@
 Como testar:
 - Use o campo de busca e os filtros para localizar tarefas.
 - Clique em + Nova tarefa para criar em qualquer coluna.
-- Edite/exclua usando o menu ⋮ de cada card.
+- Clique em qualquer card para editar os detalhes.
+- Use o ícone de lixeira no canto do card para excluir (com confirmação).
 - "Recarregar dados" sincroniza novamente com a API.
 - Confira a responsividade redimensionando a janela.
             </div>
@@ -1192,7 +1167,7 @@ Como testar:
 
                 <div class="modal-toggle">
                     <input type="checkbox" id="task-arquivada">
-                    <label for="task-arquivada" style="margin:0;">Arquivada</label>
+                    <label for="task-arquivada">Arquivada</label>
                 </div>
 
                 <label for="extra-tag-input">Tags adicionais</label>
@@ -1222,8 +1197,7 @@ Como testar:
     </div>
 
     <div class="toast" id="toast"></div>
-    <!-- Enhanced click handler with preventDefault for better menu interaction -->
-    <!-- Removed inline script and moved logic to app.js for better event handling -->
-    <script type="module" src="js/app.js"></script>
+    <!-- Lógica de interação dos cards e formulários -->
+    <script type="module" src="js/app.js?v=20241117c"></script>
 </body>
 </html>

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "egKWcvO+FNgd8vE9S+axx/VHzKp96EKakGFKqbgT9uI=",
+  "Hash": "C0kjiJ1JXmaUqE2SYLAZIW6156HqauPXik137NfOBIg=",
   "Source": "TAREFASAPI",
   "BasePath": "_content/TAREFASAPI",
   "Mode": "Default",
@@ -8,19 +8,36 @@
   "ReferencedProjectsConfiguration": [],
   "DiscoveryPatterns": [
     {
-      "Name": "TAREFASAPI\\wwwroot",
+      "Name": "TAREFASAPI/wwwroot",
       "Source": "TAREFASAPI",
-      "ContentRoot": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\wwwroot\\",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
       "BasePath": "_content/TAREFASAPI",
       "Pattern": "**"
     }
   ],
   "Assets": [
     {
-      "Identity": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\wwwroot\\index.html",
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/img/logo_o_grillo.jpg",
       "SourceId": "TAREFASAPI",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\wwwroot\\",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
+      "BasePath": "_content/TAREFASAPI",
+      "RelativePath": "img/logo_o_grillo.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot/img/logo_o_grillo.jpg"
+    },
+    {
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/index.html",
+      "SourceId": "TAREFASAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
       "BasePath": "_content/TAREFASAPI",
       "RelativePath": "index.html",
       "AssetKind": "All",
@@ -31,13 +48,13 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\index.html"
+      "OriginalItemSpec": "wwwroot/index.html"
     },
     {
-      "Identity": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\wwwroot\\js\\app.js",
+      "Identity": "/Users/pedrozo/TAREFASAPI/wwwroot/js/app.js",
       "SourceId": "TAREFASAPI",
       "SourceType": "Discovered",
-      "ContentRoot": "C:\\Users\\acair\\OneDrive\\Área de Trabalho\\Projeto web\\API_de_Tarefas\\wwwroot\\",
+      "ContentRoot": "/Users/pedrozo/TAREFASAPI/wwwroot/",
       "BasePath": "_content/TAREFASAPI",
       "RelativePath": "js/app.js",
       "AssetKind": "All",
@@ -48,7 +65,7 @@
       "AssetTraitValue": "",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\app.js"
+      "OriginalItemSpec": "wwwroot/js/app.js"
     }
   ]
 }

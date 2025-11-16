@@ -333,27 +333,24 @@ function createCard(task) {
   footer.appendChild(priorityPill);
   card.appendChild(footer);
 
-  const menu = document.createElement('div');
-  menu.className = 'card-menu';
-  menu.innerHTML = '&vellip;';
-  const dropdown = document.createElement('div');
-  dropdown.className = 'card-menu-dropdown';
-  const editButton = document.createElement('button');
-  editButton.textContent = 'Editar';
-  editButton.addEventListener('click', event => {
-    event.stopPropagation();
-    openModal(task, task.status);
-  });
   const deleteButton = document.createElement('button');
-  deleteButton.textContent = 'Excluir';
+  deleteButton.type = 'button';
+  deleteButton.className = 'card-delete-button';
+  deleteButton.setAttribute('aria-label', `Excluir tarefa ${task.title}`);
+  deleteButton.title = 'Excluir tarefa';
+  deleteButton.innerHTML = `
+    <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="9" y="3" width="6" height="2" rx="1" fill="currentColor"></rect>
+      <path d="M4 6h16v2H4z" fill="currentColor"></path>
+      <path d="M6 8h12v10a4 4 0 0 1-4 4H10a4 4 0 0 1-4-4z" fill="currentColor"></path>
+    </svg>
+  `;
   deleteButton.addEventListener('click', async event => {
     event.stopPropagation();
+    event.preventDefault();
     await deleteTask(task.id, task.title);
   });
-  dropdown.appendChild(editButton);
-  dropdown.appendChild(deleteButton);
-  menu.appendChild(dropdown);
-  card.appendChild(menu);
+  card.appendChild(deleteButton);
 
   card.addEventListener('click', () => openModal(task, task.status));
 
@@ -477,7 +474,8 @@ async function deleteTask(id, title) {
   try {
     const response = await fetch(`${API_URL}/${id}`, { method: 'DELETE' });
     if (!response.ok) throw new Error('Erro ao excluir');
-    await loadTasks();
+    tasks = tasks.filter(task => task.id !== id);
+    renderColumns();
     showToast('Tarefa excluída.');
   } catch (error) {
     console.error(error);

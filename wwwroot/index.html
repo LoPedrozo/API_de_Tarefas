@@ -552,22 +552,24 @@
             flex-wrap: wrap;
         }
         .chip {
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 999px;
             font-size: 12px;
             font-weight: 600;
             text-transform: capitalize;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: var(--gray-50);
+            color: var(--green-700);
         }
         .chip-category {
-            border: none;
-            color: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
         .chip-color {
-            color: var(--white);
+            border: 1px solid rgba(0, 0, 0, 0.05);
         }
-        .chip-color-verde { background: var(--green-200); color: var(--green-700); }
-        .chip-color-amarelo { background: #FFF3CD; color: #856404; }
-        .chip-color-cinza { background: var(--gray-500); color: var(--white); }
+        .chip-color-verde { background: #DFF5EA; color: #1E5C49; }
+        .chip-color-amarelo { background: #FFF6DA; color: #8A6A00; }
+        .chip-color-cinza { background: #E9EDF3; color: #47505A; }
 
         .card-meta {
             display: flex;
@@ -624,9 +626,18 @@
             padding: 0;
             gap: 0;
         }
-        .pill-status-todo { background: #5C6BC0; }
-        .pill-status-in-progress { background: #FFA000; }
-        .pill-status-done { background: #43A047; }
+        .pill-status-todo {
+            background: #E3E7F1;
+            color: #4E5875;
+        }
+        .pill-status-in-progress {
+            background: #FBE4CE;
+            color: #A5571A;
+        }
+        .pill-status-done {
+            background: #D9F4E6;
+            color: #1B6B4F;
+        }
 
         .card-extra-tags {
             display: flex;

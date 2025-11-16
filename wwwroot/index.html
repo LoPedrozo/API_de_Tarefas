@@ -6,7 +6,7 @@
     <title>O Grillo - Kanban</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
 
     <style>
@@ -14,10 +14,13 @@
         :root {
             --green-700: #2E7D32;
             --green-200: #A5D6A7;
+            --green-primary: #68D3A0;
+            --green-primary-dark: #4EBE8B;
             --white: #FFFFFF;
             --gray-50: #F4F6F6;
             --gray-500: #9AA0A6;
             --shadow: rgba(0,0,0,.08);
+            --input-border: #DCE6DF;
         }
 
         /* Reset e estilos globais */
@@ -27,12 +30,79 @@
             padding: 0;
         }
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
             background: var(--gray-50);
             color: var(--green-700);
             line-height: 1.5;
             transition: all 150ms ease;
             overflow-x: hidden;
+        }
+        button,
+        input,
+        select,
+        textarea {
+            font-family: 'Poppins', sans-serif;
+        }
+        button {
+            background: var(--green-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 14px;
+            padding: 10px 18px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 180ms ease, transform 180ms ease, box-shadow 180ms ease;
+        }
+        button:hover {
+            background: var(--green-primary-dark);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(104, 211, 160, 0.25);
+        }
+        button:focus-visible {
+            outline: 3px solid rgba(104, 211, 160, 0.35);
+            outline-offset: 2px;
+        }
+        input[type="text"],
+        input[type="number"],
+        input[type="date"],
+        textarea,
+        select {
+            border: 1.5px solid var(--input-border);
+            border-radius: 16px;
+            padding: 10px 14px;
+            height: 46px;
+            background: var(--white);
+            font-size: 14px;
+            transition: border-color 180ms ease, box-shadow 180ms ease;
+        }
+        textarea {
+            min-height: 90px;
+            padding: 12px 14px;
+            resize: vertical;
+        }
+        input:focus,
+        select:focus,
+        textarea:focus {
+            border-color: var(--green-primary);
+            box-shadow: 0 0 0 3px rgba(104, 211, 160, 0.2);
+            outline: none;
+        }
+        select {
+            appearance: none;
+            background-color: var(--gray-50);
+            background-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 24 24' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 9l5 5 5-5' stroke='%234EBE8B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            background-size: 16px;
+            padding-right: 42px;
+        }
+        label {
+            font-weight: 500;
+            color: var(--green-700);
+        }
+        ::placeholder {
+            color: var(--gray-500);
         }
         body.compact .card {
             padding: 8px;
@@ -162,6 +232,14 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            box-shadow: none;
+            color: #333333;
+        }
+        .help button:hover {
+            background: var(--white);
+            border-color: var(--green-primary);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            transform: none;
         }
         .help-tooltip {
             display: none;
@@ -361,21 +439,19 @@
 
         /* Neutral styling for "Adicionar" button */
         .add-task {
-            padding: 10px 20px;
-            background: var(--gray-50);
-            color: var(--green-700);
-            border: 1px solid #E0E0E0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 500;
+            padding: 12px 26px;
+            background: var(--green-primary);
+            color: var(--white);
+            border: none;
+            border-radius: 18px;
+            font-size: 15px;
+            font-weight: 600;
             margin-bottom: 16px;
             align-self: flex-start;
-            transition: all 200ms ease;
+            box-shadow: 0 15px 35px rgba(104, 211, 160, 0.35);
         }
         .add-task:hover {
-            background: #E8E8E8;
-            border-color: var(--gray-500);
+            background: var(--green-primary-dark);
         }
         .add-task:active {
             transform: scale(0.98);
@@ -383,8 +459,8 @@
         
         @media (max-width: 599px) {
             .add-task {
-                padding: 8px 10px;
-                font-size: 13px;
+                padding: 10px 16px;
+                font-size: 14px;
                 margin-bottom: 12px;
                 width: 100%;
                 align-self: stretch;
@@ -567,36 +643,17 @@
         }
         .tag-input input {
             flex: 1;
-            transition: all 200ms ease;
-            border: 2px solid #E0E0E0;
-            padding: 10px 12px;
-            border-radius: 8px;
-            font-size: 14px;
             height: 48px;
-            box-sizing: border-box;
         }
         /* Neutral styling for tag "Adicionar" button */
         .tag-input button {
             padding: 0 24px;
-            background: var(--gray-50);
-            color: var(--green-700);
-            border: 2px solid #E0E0E0;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 600;
-            transition: all 200ms ease;
-            white-space: nowrap;
-            box-sizing: border-box;
             height: 48px;
             display: flex;
             align-items: center;
             justify-content: center;
             line-height: 1;
-        }
-        .tag-input button:hover {
-            background: #E8E8E8;
-            border-color: var(--gray-500);
+            font-weight: 600;
         }
         
         .modal-toggle {
@@ -697,7 +754,7 @@
             height: 36px;
             border: none;
             background: transparent;
-            color: #E53935;
+            color: #D32F2F;
             line-height: 1;
             display: flex;
             align-items: center;
@@ -705,6 +762,10 @@
             cursor: pointer;
             transition: transform 150ms ease, color 150ms ease, background 150ms ease;
             z-index: 2;
+            padding: 0;
+        }
+        .card-delete-button svg path {
+            fill: currentColor;
         }
         .card-delete-button svg {
             width: 22px;
@@ -783,22 +844,15 @@
         }
         .modal input, .modal textarea, .modal select {
             width: 100%;
-            padding: 8px 12px;
-            border: 1px solid var(--gray-500);
-            border-radius: 8px;
             margin-bottom: 16px;
-            font-size: 14px;
         }
         @media (max-width: 599px) {
             .modal input, .modal textarea, .modal select {
-                padding: 8px 10px;
-                font-size: 14px;
                 margin-bottom: 12px;
             }
         }
         .modal textarea {
-            resize: vertical;
-            min-height: 80px;
+            min-height: 110px;
         }
         .modal-buttons {
             display: flex;
@@ -812,44 +866,30 @@
             }
         }
         .modal-buttons button {
-            padding: 8px 16px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
+            width: auto;
         }
         @media (max-width: 599px) {
             .modal-buttons button {
-                padding: 10px;
-                font-size: 14px;
                 width: 100%;
             }
         }
         .modal-save {
-            background: var(--green-700);
+            background: var(--green-primary);
             color: var(--white);
         }
         .modal-save:hover {
-            background: #1B5E20;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(46, 125, 50, 0.3);
-            transition: all 200ms ease;
+            background: var(--green-primary-dark);
         }
         .modal-cancel {
-            background: var(--gray-50);
-            color: var(--gray-500);
+            background: transparent;
+            color: var(--green-primary);
+            border: 1.5px solid var(--green-primary);
         }
         .modal-cancel:hover {
-            background: #E0E0E0;
-            transition: all 200ms ease;
+            background: rgba(104, 211, 160, 0.12);
         }
         .modal input:hover, .modal textarea:hover, .modal select:hover {
-            border-color: var(--green-200);
-            transition: all 200ms ease;
-        }
-        .modal input:focus, .modal textarea:focus, .modal select:focus {
-            border-color: var(--green-700);
-            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.1);
+            border-color: var(--green-primary);
         }
         .pill {
             transition: all 200ms ease;
@@ -865,7 +905,7 @@
             transform: scale(1.05);
         }
         .filter select:hover {
-            border-color: var(--green-700);
+            border-color: var(--green-primary);
             transition: all 200ms ease;
         }
         .tab:hover {

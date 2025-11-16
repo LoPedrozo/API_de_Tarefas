@@ -740,7 +740,9 @@ function getLabelDefinition(id) {
 }
 
 function getTodayDateString() {
-  return new Date().toISOString().split('T')[0];
+  const now = new Date();
+  now.setMinutes(now.getMinutes() - now.getTimezoneOffset());
+  return now.toISOString().split('T')[0];
 }
 
 function showToast(message, isError = false) {

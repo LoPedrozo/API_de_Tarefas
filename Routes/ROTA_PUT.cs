@@ -22,6 +22,7 @@ namespace TAREFASAPI.Routes
                 tarefaExistente.Arquivada = tarefaAtualizada.Arquivada;
                 tarefaExistente.DataVencimento = tarefaAtualizada.DataVencimento;
                 tarefaExistente.DataConclusao = tarefaAtualizada.DataConclusao;
+                tarefaExistente.EstimativaHoras = tarefaAtualizada.EstimativaHoras;
 
                 await db.SaveChangesAsync();
                 return Results.Ok(tarefaExistente);

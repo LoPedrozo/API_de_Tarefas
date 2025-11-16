@@ -244,17 +244,32 @@
         .help-tooltip {
             display: none;
             position: absolute;
-            top: calc(100% + 8px);
-            right: 0;
+            top: calc(100% + 14px);
+            right: -10px;
             background: var(--white);
-            border: 1px solid var(--gray-500);
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 4px 12px var(--shadow);
-            font-size: 11px;
-            white-space: pre-line;
+            border: 1px solid rgba(104, 211, 160, 0.35);
+            border-radius: 16px;
+            padding: 18px 20px;
+            box-shadow: 0 18px 35px rgba(0, 0, 0, 0.18);
+            font-size: 12px;
+            line-height: 1.5;
+            color: var(--green-700);
             z-index: 200;
-            max-width: 220px;
+            width: 290px;
+            white-space: normal;
+        }
+        .help-tooltip::before {
+            content: "";
+            position: absolute;
+            top: -10px;
+            right: 36px;
+            width: 18px;
+            height: 18px;
+            background: var(--white);
+            border-left: 1px solid rgba(104, 211, 160, 0.35);
+            border-top: 1px solid rgba(104, 211, 160, 0.35);
+            transform: rotate(45deg);
+            box-shadow: -5px -5px 15px rgba(0, 0, 0, 0.05);
         }
         .help:hover .help-tooltip {
             display: block;

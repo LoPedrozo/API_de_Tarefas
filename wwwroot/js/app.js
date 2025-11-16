@@ -58,10 +58,46 @@ const STATUS_OPTIONS = {
 };
 
 const PRIORITY_OPTIONS = {
-  baixa: { label: 'Baixa', api: 'Baixa', pillClass: 'pill-priority-baixa' },
-  medio: { label: 'Média', api: 'Medio', pillClass: 'pill-priority-medio' },
-  alta: { label: 'Alta', api: 'Alta', pillClass: 'pill-priority-alta' },
-  critica: { label: 'Crítica', api: 'Critica', pillClass: 'pill-priority-critica' }
+  baixa: {
+    label: 'Baixa',
+    api: 'Baixa',
+    pillClass: 'pill-priority-baixa',
+    icon: `<svg class="priority-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="3.5" y="3.5" width="17" height="17" rx="4" transform="rotate(45 12 12)" fill="#34C759"/>
+      <path d="M11 7.5h2v4.8h2.1L12 16.3 8.9 12.3H11z" fill="#ffffff" rx="1"/>
+    </svg>`
+  },
+  medio: {
+    label: 'Média',
+    api: 'Medio',
+    pillClass: 'pill-priority-medio',
+    icon: `<svg class="priority-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="10" fill="#F4B400"/>
+      <circle cx="12" cy="12" r="7" fill="#ffffff"/>
+      <rect x="11" y="7" width="2" height="6" rx="1" fill="#F4B400"/>
+      <rect x="11" y="15" width="2" height="2" rx="1" fill="#F4B400"/>
+    </svg>`
+  },
+  alta: {
+    label: 'Alta',
+    api: 'Alta',
+    pillClass: 'pill-priority-alta',
+    icon: `<svg class="priority-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <circle cx="12" cy="12" r="10" fill="#FF8C42"/>
+      <rect x="10.5" y="5.5" width="3" height="9.5" rx="1.5" fill="#ffffff"/>
+      <rect x="10.5" y="16.5" width="3" height="3" rx="1.2" fill="#ffffff"/>
+    </svg>`
+  },
+  critica: {
+    label: 'Crítica',
+    api: 'Critica',
+    pillClass: 'pill-priority-critica',
+    icon: `<svg class="priority-icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="2.5" y="2.5" width="19" height="19" rx="5" transform="rotate(45 12 12)" fill="#E53935"/>
+      <rect x="10.5" y="5.5" width="3" height="9.5" rx="1.5" fill="#ffffff"/>
+      <rect x="10.5" y="16.5" width="3" height="3.5" rx="1.3" fill="#ffffff"/>
+    </svg>`
+  }
 };
 
 const DATE_SENTINELS = {
@@ -330,7 +366,12 @@ function createCard(task) {
 
   const priorityPill = document.createElement('span');
   priorityPill.className = `pill ${PRIORITY_OPTIONS[task.priority]?.pillClass ?? ''}`;
-  priorityPill.textContent = PRIORITY_OPTIONS[task.priority]?.label ?? 'Média';
+  const priorityDef = PRIORITY_OPTIONS[task.priority] ?? PRIORITY_OPTIONS.medio;
+  priorityPill.innerHTML = priorityDef.icon
+    ? `<span class="pill-icon" aria-hidden="true">${priorityDef.icon}</span>`
+    : '';
+  priorityPill.setAttribute('title', `Prioridade ${priorityDef.label}`);
+  priorityPill.setAttribute('aria-label', `Prioridade ${priorityDef.label}`);
   footer.appendChild(priorityPill);
   card.appendChild(footer);
 

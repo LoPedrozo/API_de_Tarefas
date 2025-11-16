@@ -595,12 +595,15 @@
             }
         }
         .pill {
-            padding: 4px 10px;
+            padding: 4px 12px;
             border-radius: 999px;
             font-size: 12px;
             font-weight: 600;
             color: var(--white);
             text-transform: capitalize;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
         }
         @media (max-width: 599px) {
             .pill {
@@ -608,13 +611,22 @@
                 font-size: 11px;
             }
         }
+        .pill svg.priority-icon {
+            width: 24px;
+            height: 24px;
+            display: block;
+        }
+        .pill-priority-baixa,
+        .pill-priority-medio,
+        .pill-priority-alta,
+        .pill-priority-critica {
+            background: transparent;
+            padding: 0;
+            gap: 0;
+        }
         .pill-status-todo { background: #5C6BC0; }
         .pill-status-in-progress { background: #FFA000; }
         .pill-status-done { background: #43A047; }
-        .pill-priority-baixa { background: #81C784; }
-        .pill-priority-medio { background: #29B6F6; }
-        .pill-priority-alta { background: #EF5350; }
-        .pill-priority-critica { background: #C62828; }
 
         .card-extra-tags {
             display: flex;
